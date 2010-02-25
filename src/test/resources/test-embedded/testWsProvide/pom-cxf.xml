@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-    <name>testWsConsume</name>
+    <name>testWsProvide</name>
 	<groupId>org.jboss.ws.plugins.maven.tests</groupId>
-	<artifactId>testWsConsume</artifactId>
+	<artifactId>testWsProvide</artifactId>
 	<packaging>jar</packaging>
 	<version>@pom.version@</version>
 
@@ -37,39 +37,11 @@
             <execution>
               <id>First execution</id>
               <goals>
-                <goal>wsconsume</goal>
+                <goal>wsprovide</goal>
               </goals>
               <configuration>
-                <wsdls>
-                  <wsdl>${basedir}/test.wsdl</wsdl>
-                </wsdls>
-                <targetPackage>foo.bar</targetPackage>
-              </configuration>
-            </execution>
-            <execution>
-              <id>Second execution</id>
-              <goals>
-                <goal>wsconsume</goal>
-              </goals>
-              <configuration>
-                <wsdls>
-                  <wsdl>${basedir}/test2.wsdl</wsdl>
-                </wsdls>
-                <targetPackage>foo.bar2</targetPackage>
-                <sourceDirectory>${project.build.directory}/generated/java-sources</sourceDirectory>
-                <extension>true</extension>
-              </configuration>
-            </execution>
-            <execution>
-              <id>Third execution</id>
-              <goals>
-                <goal>wsconsume</goal>
-              </goals>
-              <configuration>
-                <wsdls>
-                  <wsdl>${basedir}/test.wsdl</wsdl>
-                  <wsdl>${basedir}/test2.wsdl</wsdl>
-                </wsdls>
+                <endpointClass>org.jboss.test.ws.plugins.tools.wsprovide.TestEndpoint</endpointClass>
+                <generateWsdl>true</generateWsdl>
               </configuration>
             </execution>
           </executions>
@@ -79,9 +51,9 @@
 
 	<dependencies>
 	  <dependency>
-		<groupId>org.jboss.ws.native</groupId>
-		<artifactId>jbossws-native-client</artifactId>
-		<version>3.3.0.Beta4</version>
+		<groupId>org.jboss.ws.cxf</groupId>
+		<artifactId>jbossws-cxf-client</artifactId>
+		<version>3.3.0.Beta1</version>
 	  </dependency>
 	</dependencies>
 </project>

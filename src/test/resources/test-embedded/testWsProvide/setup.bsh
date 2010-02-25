@@ -1,0 +1,7 @@
+import java.io.*;
+import org.jboss.test.ws.plugins.tools.helpers.*;
+import java.util.*;
+import java.util.regex.*;
+
+TestWsProvideHelper helper = new TestWsProvideHelper();
+helper.setup(basedir, localRepositoryPath, context);

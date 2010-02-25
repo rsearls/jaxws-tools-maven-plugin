@@ -79,9 +79,9 @@
 
 	<dependencies>
 	  <dependency>
-		<groupId>org.jboss.ws.native</groupId>
-		<artifactId>jbossws-native-client</artifactId>
-		<version>3.3.0.Beta4</version>
+		<groupId>org.jboss.ws.metro</groupId>
+		<artifactId>jbossws-metro-client</artifactId>
+		<version>3.3.0.Beta1</version>
 	  </dependency>
 	</dependencies>
 </project>

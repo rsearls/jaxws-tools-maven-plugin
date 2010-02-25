@@ -26,7 +26,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
@@ -46,21 +45,15 @@ abstract class AbstractToolsMojo extends AbstractMojo
    */
    protected MavenProject project;
 
-   /**
-    * Map of of plugin artifacts.
-    *
-    * @parameter expression="${plugin.artifactMap}"
-    * @readonly
-    */
-   private Map pluginArtifactMap;
-
-   /**
-    * Enables/Disables Java source generation.
-    * 
-    * @parameter default-value="true"
-    */
-   protected Boolean generateSource;
+   protected Boolean generateSource = true; //always generate sources, as we're having them compiled by Maven
    
+   /**
+    * Enables/Disables SOAP 1.2 binding extension
+    * 
+    * @parameter default-value="false"
+    */
+   protected Boolean extension;
+
    /**
     * 
     * @parameter default-value="false"

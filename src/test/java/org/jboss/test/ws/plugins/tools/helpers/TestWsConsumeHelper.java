@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.Map;
 
 /**
+ * A helper class for testing the plugin through bsh scripts
  * 
  * @author alessio.soldano@jboss.com
  * @since 24-Feb-2010
@@ -33,10 +34,12 @@ import java.util.Map;
 public class TestWsConsumeHelper implements VerifyScriptHelper, SetupScriptHelper
 {
    private Long lastModificationTime = null;
+   private Long lastModificationTime2 = null;
 
    @Override
    public boolean verify(File basedir, File localRepositoryPath, Map<?, ?> context) throws Exception
    {
+      //fist execution checks
       File endpointFile = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsconsume" + File.separator + "java" +
             File.separator + "foo" + File.separator + "bar" + File.separator + "Endpoint.java");
       if (!endpointFile.exists())
@@ -49,6 +52,29 @@ public class TestWsConsumeHelper implements VerifyScriptHelper, SetupScriptHelpe
          System.out.println(endpointFile + " was not modified by the plugin!");
          return false;
       }
+      
+      //second execution checks
+      File endpointFile2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "generated" + File.separator + "java-sources" +
+            File.separator + "foo" + File.separator + "bar2" + File.separator + "Endpoint.java");
+      if (!endpointFile2.exists())
+      {
+         System.out.println(endpointFile2 + " not found!");
+         return false;
+      }
+      if (lastModificationTime2 != null && endpointFile2.lastModified() == lastModificationTime2)
+      {
+         System.out.println(endpointFile2 + " was not modified by the plugin!");
+         return false;
+      }
+      
+      //classes checks
+      File classesOrg = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "classes" + File.separator + "org");
+      File classesFoo = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "classes" + File.separator + "foo");
+      if (!classesFoo.exists() || !classesOrg.exists())
+      {
+         return false;
+      }
+      
       return true;
    }
 
@@ -60,6 +86,13 @@ public class TestWsConsumeHelper implements VerifyScriptHelper, SetupScriptHelpe
       if (endpointFile.exists())
       {
          this.lastModificationTime = endpointFile.lastModified();
+      }
+      
+      File endpointFile2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "generated" + File.separator + "java-sources" +
+            File.separator + "foo" + File.separator + "bar2" + File.separator + "Endpoint.java");
+      if (endpointFile2.exists())
+      {
+         this.lastModificationTime2 = endpointFile2.lastModified();
       }
    }
 

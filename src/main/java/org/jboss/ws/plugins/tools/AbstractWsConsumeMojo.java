@@ -62,19 +62,11 @@ abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
 
    /**
     * Sets the source directory. This directory will contain any generated Java source.
-    * If the directory does not exist, it will be created. If not specified,
-    * the output directory will be used instead.
+    * If the directory does not exist, it will be created.
     * 
     * @parameter default-value="${project.build.directory}/wsconsume/java"
     */
    protected File sourceDirectory;
-
-   /**
-    * Enables/Disables SOAP 1.2 binding extension
-    * 
-    * @parameter default-value="false"
-    */
-   protected Boolean extension;
 
    protected Boolean noCompile = true; //let Maven compile the sources
 
