@@ -25,6 +25,10 @@ import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
 import org.jboss.test.ws.plugins.tools.utils.AbstractToolsMojoTestCase;
+import org.jboss.ws.plugins.tools.AbstractWsConsumeMojo;
+import org.jboss.ws.plugins.tools.AbstractWsProvideMojo;
+import org.jboss.ws.plugins.tools.TestWsConsumeMojo;
+import org.jboss.ws.plugins.tools.TestWsProvideMojo;
 import org.jboss.ws.plugins.tools.WsConsumeMojo;
 import org.jboss.ws.plugins.tools.WsProvideMojo;
 import org.junit.Test;
@@ -44,7 +48,12 @@ public class ArgumentTest extends AbstractToolsMojoTestCase
    {
       final String pluginConfig = "target/test-classes/test-argument/wsconsume-plugin-config.xml";
 
-      WsConsumeMojo mojo = getMojo(WsConsumeMojo.class, "wsconsume", pluginConfig);
+      internalWsConsumeTest(getMojo(WsConsumeMojo.class, "wsconsume", pluginConfig));
+      internalWsConsumeTest(getMojo(TestWsConsumeMojo.class, "wsconsume", pluginConfig));
+   }
+   
+   private static void internalWsConsumeTest(AbstractWsConsumeMojo mojo)
+   {
       assertEquals("t", mojo.getTarget());
       assertEquals("output", mojo.getOutputDirectory().getName());
       assertEquals("tp", mojo.getTargetPackage());
@@ -63,7 +72,12 @@ public class ArgumentTest extends AbstractToolsMojoTestCase
    {
       final String pluginConfig = "target/test-classes/test-argument/wsprovide-plugin-config.xml";
 
-      WsProvideMojo mojo = getMojo(WsProvideMojo.class, "wsprovide", pluginConfig);
+      internalWsProvideTest(getMojo(WsProvideMojo.class, "wsprovide", pluginConfig));
+      internalWsProvideTest(getMojo(TestWsProvideMojo.class, "wsprovide", pluginConfig));
+   }
+   
+   private static void internalWsProvideTest(AbstractWsProvideMojo mojo)
+   {
       assertEquals("output", mojo.getOutputDirectory().getName());
       assertEquals("endpoint", mojo.getEndpointClass());
       assertEquals("resource", mojo.getResourceDirectory().getName());

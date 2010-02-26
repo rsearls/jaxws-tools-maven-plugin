@@ -34,7 +34,7 @@ import org.jboss.wsf.spi.tools.WSContractProvider;
  * @since 25-Feb-2010
  *
  */
-abstract class AbstractWsProvideMojo extends AbstractToolsMojo 
+public abstract class AbstractWsProvideMojo extends AbstractToolsMojo 
 {
    /**
     * Enables/Disables WSDL generation.

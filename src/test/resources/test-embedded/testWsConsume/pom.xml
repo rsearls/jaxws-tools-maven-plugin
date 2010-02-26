@@ -27,8 +27,8 @@
 	  </pluginManagement>
 	  <plugins>
 		<plugin>
-          <groupId>org.jboss.ws.plugins.maven</groupId>
-          <artifactId>jaxws-tools-plugin</artifactId>
+          <groupId>org.jboss.ws.plugins</groupId>
+          <artifactId>maven-jaxws-tools-plugin</artifactId>
           <version>@pom.version@</version>
           <configuration>
             <verbose>true</verbose>

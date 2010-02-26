@@ -2,8 +2,8 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.jboss.ws.plugins.maven</groupId>
-        <artifactId>jaxws-tools-plugin</artifactId>
+        <groupId>org.jboss.ws.plugins</groupId>
+        <artifactId>maven-jaxws-tools-plugin</artifactId>
         <configuration>
           <outputDirectory>output</outputDirectory>
           <classpathElements>

@@ -37,7 +37,7 @@ import org.jboss.wsf.spi.tools.WSContractConsumer;
  * @since 24-Feb-2010
  *
  */
-abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
+public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
 {
    /**
     * The list of wsdl urls / files to consume
