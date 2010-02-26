@@ -27,10 +27,15 @@ import java.util.List;
 /**
  * Run wsconsume tool (for tests)
  *
+ * @goal wsconsume-test
+ * @phase generate-test-sources
+ * @requiresDependencyResolution
+ * @description JBossWS WSConsume (Test) Maven Plugin.
+ *
  * @author alessio.soldano@jboss.com
  * @since 24-Feb-2010
  */
-public class TestWsConsumeMojo extends WsConsumeMojo
+public class TestWsConsumeMojo extends AbstractWsConsumeMojo
 {
    /**
     * Sets the main output directory. If the directory does not exist, it will be created.

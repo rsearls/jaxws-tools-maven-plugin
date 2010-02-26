@@ -29,6 +29,13 @@
     <maven.project.version>2.0.4</maven.project.version>
     <maven.plugin.api.version>2.0.4</maven.plugin.api.version>
     <maven.invoker.plugin.version>1.5</maven.invoker.plugin.version>
+    <!-- For test -->
+    <junit.version>4.7</junit.version>
+    <maven.plugin.testing.harness.version>1.1</maven.plugin.testing.harness.version>
+    <jbossws.cxf.client.version>3.3.0.Beta1</jbossws.cxf.client.version>
+    <jbossws.metro.client.version>3.3.0.Beta1</jbossws.metro.client.version>
+    <jbossws.native.client.version>3.3.0.Beta4</jbossws.native.client.version>
+    <jbossxb.version>2.0.1.GA</jbossxb.version>
   </properties>
   
   <!-- Dependencies -->
@@ -53,14 +60,14 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.7</version>
+      <version>${junit.version}</version>
       <type>jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.shared</groupId>
       <artifactId>maven-plugin-testing-harness</artifactId>
-      <version>1.1</version>
+      <version>${maven.plugin.testing.harness.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -68,25 +75,25 @@
     <dependency>
 	  <groupId>org.jboss.ws.native</groupId>
 	  <artifactId>jbossws-native-client</artifactId>
-	  <version>3.3.0.Beta4</version>
+	  <version>${jbossws.native.client.version}</version>
 	  <scope>test</scope>
 	</dependency>
 	<dependency>
 	  <groupId>org.jboss.ws.cxf</groupId>
       <artifactId>jbossws-cxf-client</artifactId>
-      <version>3.3.0.Beta1</version>
+      <version>${jbossws.cxf.client.version}</version>
 	  <scope>test</scope>
     </dependency>
     <dependency>
 	  <groupId>org.jboss.ws.metro</groupId>
 	  <artifactId>jbossws-metro-client</artifactId>
-	  <version>3.3.0.Beta1</version>
+	  <version>${jbossws.metro.client.version}</version>
 	  <scope>test</scope>
 	</dependency>
     <dependency>
       <groupId>org.jboss</groupId>
       <artifactId>jbossxb</artifactId>
-      <version>2.0.1.GA</version>
+      <version>${jbossxb.version}</version>
       <optional>true</optional>
 	  <!-- <scope>test</scope> --> <!-- TODO Move this to test scope instead of making it optional; currently messes up classloader in wsprovide test with Native stack -->
     </dependency>

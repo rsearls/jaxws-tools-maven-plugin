@@ -44,6 +44,16 @@
                 <generateWsdl>true</generateWsdl>
               </configuration>
             </execution>
+            <execution>
+              <id>Second execution</id>
+              <goals>
+                <goal>wsprovide-test</goal>
+              </goals>
+              <configuration>
+                <endpointClass>org.jboss.test.ws.plugins.tools.wsprovide.TestEndpoint2</endpointClass>
+                <generateWsdl>true</generateWsdl>
+              </configuration>
+            </execution>
           </executions>
         </plugin>
 	  </plugins>

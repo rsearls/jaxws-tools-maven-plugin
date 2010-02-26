@@ -74,6 +74,12 @@ public class TestWsConsumeHelper implements VerifyScriptHelper, SetupScriptHelpe
       {
          return false;
       }
+      File testClassesOrg = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "test-classes" + File.separator + "org");
+      File testClassesFoo = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "test-classes" + File.separator + "foo");
+      if (!testClassesFoo.exists() || !testClassesOrg.exists())
+      {
+         return false;
+      }
       
       return true;
    }

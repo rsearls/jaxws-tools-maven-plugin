@@ -34,6 +34,7 @@ import java.util.Map;
 public class TestWsProvideHelper implements VerifyScriptHelper, SetupScriptHelper
 {
    private Long wsdlLastModificationTime = null;
+   private Long wsdlLastModificationTime2 = null;
    private Long wrapperClassLastModificationTime = null;
 
    @Override
@@ -42,30 +43,29 @@ public class TestWsProvideHelper implements VerifyScriptHelper, SetupScriptHelpe
       File wrapper = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsprovide" + File.separator + "java" +
             File.separator + "org" + File.separator + "jboss" + File.separator + "test" + File.separator + "ws" + File.separator + "plugins" +
             File.separator + "tools" + File.separator + "wsprovide" + File.separator + "jaxws" + File.separator + "Test.java");
-      if (!wrapper.exists())
-      {
-         System.out.println(wrapper + " not found!");
-         return false;
-      }
-      if (wrapperClassLastModificationTime != null && wrapper.lastModified() == wrapperClassLastModificationTime)
-      {
-         System.out.println(wrapper + " was not modified by the plugin!");
-         return false;
-      }
-      
       File wsdl = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsprovide" + File.separator + "resources" +
             File.separator + "TestEndpointService.wsdl");
-      if (!wsdl.exists())
+      File wsdl2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsprovide" + File.separator + "resources" +
+            File.separator + "TestEndpoint2Service.wsdl");
+
+      final boolean firstCheck = internalVerify(wrapper, wrapperClassLastModificationTime);
+      final boolean secondCheck = internalVerify(wsdl, wsdlLastModificationTime);
+      final boolean thirdCheck = internalVerify(wsdl2, wsdlLastModificationTime2);
+      return firstCheck && secondCheck && thirdCheck;
+   }
+   
+   private static boolean internalVerify(File file, Long modificationTime)
+   {
+      if (!file.exists())
       {
-         System.out.println(wsdl + " not found!");
+         System.out.println(file + " not found!");
          return false;
       }
-      if (wsdlLastModificationTime != null && wsdl.lastModified() == wsdlLastModificationTime)
+      if (modificationTime != null && file.lastModified() == modificationTime)
       {
-         System.out.println(wsdl + " was not modified by the plugin!");
+         System.out.println(file + " was not modified by the plugin!");
          return false;
       }
-      
       return true;
    }
 
@@ -85,6 +85,13 @@ public class TestWsProvideHelper implements VerifyScriptHelper, SetupScriptHelpe
       if (wsdl.exists())
       {
          this.wsdlLastModificationTime = wsdl.lastModified();
+      }
+      
+      File wsdl2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsprovide" + File.separator + "resources" +
+            File.separator + "TestEndpointService2.wsdl");
+      if (wsdl2.exists())
+      {
+         this.wsdlLastModificationTime2 = wsdl2.lastModified();
       }
    }
 

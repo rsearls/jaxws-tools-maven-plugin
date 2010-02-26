@@ -72,6 +72,18 @@
                 </wsdls>
               </configuration>
             </execution>
+            <execution>
+              <id>Forth execution</id>
+              <goals>
+                <goal>wsconsume-test</goal>
+              </goals>
+              <configuration>
+                <wsdls>
+                  <wsdl>${basedir}/test.wsdl</wsdl>
+                  <wsdl>${basedir}/test2.wsdl</wsdl>
+                </wsdls>
+              </configuration>
+            </execution>
           </executions>
         </plugin>
 	  </plugins>
