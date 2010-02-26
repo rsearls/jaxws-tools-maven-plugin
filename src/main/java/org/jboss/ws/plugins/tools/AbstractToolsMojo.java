@@ -31,7 +31,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 
 /**
- * 
+ * Abstract mojo all the other need to extend
  * 
  * @author alessio.soldano@jboss.com
  * @since 24-Feb-2010
@@ -63,16 +63,21 @@ abstract class AbstractToolsMojo extends AbstractMojo
    /**
     * Either ${build.outputDirectory} or ${build.testOutputDirectory}.
     */
-   protected abstract File getDestDir();
+   public abstract File getOutputDirectory();
    
    /**
     * Either ${project.compileClasspathElements} or ${project.testClasspathElements}
     */
-   protected abstract List<String> getClasspath();
+   public abstract List<String> getClasspathElements();
+   
+   /**
+    * Update the current Maven project source roots with the generated classes / resources
+    */
+   protected abstract void updateProjectSourceRoots();
    
    protected ClassLoader getMavenClasspathAwareClassLoader(ClassLoader parent)
    {
-      List<String> classpath = getClasspath();
+      List<String> classpath = getClasspathElements();
       final int size = classpath.size();
       URL[] urls = new URL[size];
       for (int i=0; i < size; i++)
@@ -87,6 +92,16 @@ abstract class AbstractToolsMojo extends AbstractMojo
          }
       }
       return new URLClassLoader(urls, parent);
+   }
+
+   public Boolean getExtension()
+   {
+      return extension;
+   }
+
+   public Boolean isVerbose()
+   {
+      return verbose;
    }
    
 }

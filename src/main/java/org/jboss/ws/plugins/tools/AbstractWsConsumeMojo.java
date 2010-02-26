@@ -31,7 +31,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.jboss.wsf.spi.tools.WSContractConsumer;
 
 /**
- * 
+ * Generic mojo for wsconsume tool
  * 
  * @author alessio.soldano@jboss.com
  * @since 24-Feb-2010
@@ -51,7 +51,7 @@ abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
     * 
     * @parameter
     */
-   protected List<File> bindingFiles;
+   protected List<String> bindingFiles;
 
    /**
     * Sets the OASIS XML Catalog file to use for entity resolution.
@@ -104,7 +104,7 @@ abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
       if (verbose)
       {
          log.info("Classpath:");
-         for (String s : getClasspath())
+         for (String s : getClasspathElements())
          {
             log.info(" " + s);
          }
@@ -131,7 +131,7 @@ abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
                throw new MojoExecutionException("Error while running wsconsume", e);
             }
          }
-         project.addCompileSourceRoot(sourceDirectory.getAbsolutePath());
+         updateProjectSourceRoots();
       }
       finally
       {
@@ -141,11 +141,16 @@ abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
 
    private void setupConsumer(WSContractConsumer consumer)
    {
-      consumer.setAdditionalCompilerClassPath(new LinkedList<String>(getClasspath()));
+      consumer.setAdditionalCompilerClassPath(new LinkedList<String>(getClasspathElements()));
       consumer.setMessageStream(System.out);
       if (bindingFiles != null && !bindingFiles.isEmpty())
       {
-         consumer.setBindingFiles(bindingFiles);
+         List<File> files = new LinkedList<File>();
+         for (String bf : bindingFiles)
+         {
+            files.add(new File(bf));
+         }
+         consumer.setBindingFiles(files);
       }
       if (catalog != null)
       {
@@ -154,7 +159,7 @@ abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
       consumer.setExtension(extension);
       consumer.setGenerateSource(generateSource);
       consumer.setNoCompile(noCompile);
-      File outputDir = getDestDir();
+      File outputDir = getOutputDirectory();
       if (outputDir != null)
       {
          consumer.setOutputDirectory(outputDir);
@@ -175,5 +180,40 @@ abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
       {
          consumer.setWsdlLocation(wsdlLocation);
       }
+   }
+
+   public List<String> getWsdls()
+   {
+      return wsdls;
+   }
+
+   public List<String> getBindingFiles()
+   {
+      return bindingFiles;
+   }
+
+   public File getCatalog()
+   {
+      return catalog;
+   }
+
+   public File getSourceDirectory()
+   {
+      return sourceDirectory;
+   }
+
+   public String getTargetPackage()
+   {
+      return targetPackage;
+   }
+
+   public String getWsdlLocation()
+   {
+      return wsdlLocation;
+   }
+
+   public String getTarget()
+   {
+      return target;
    }
 }

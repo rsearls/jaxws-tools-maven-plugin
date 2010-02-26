@@ -1,0 +1,23 @@
+<project>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jboss.ws.plugins.maven</groupId>
+        <artifactId>jaxws-tools-plugin</artifactId>
+        <configuration>
+          <outputDirectory>output</outputDirectory>
+          <classpathElements>
+            <classpathElement>cp1</classpathElement>
+            <classpathElement>cp2</classpathElement>
+          </classpathElements>
+          <generateWsdl>true</generateWsdl>
+          <resourceDirectory>resource</resourceDirectory>
+          <sourceDirectory>source</sourceDirectory>
+          <endpointClass>endpoint</endpointClass>
+          <extension>true</extension>
+          <verbose>true</verbose>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

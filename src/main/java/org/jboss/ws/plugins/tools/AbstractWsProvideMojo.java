@@ -28,7 +28,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.jboss.wsf.spi.tools.WSContractProvider;
 
 /**
- * 
+ * Generic mojo for wsprovide tool
  * 
  * @author alessio.soldano@jboss.com
  * @since 25-Feb-2010
@@ -49,7 +49,7 @@ abstract class AbstractWsProvideMojo extends AbstractToolsMojo
     * 
     * @parameter default-value="${project.build.directory}/wsprovide/resources"
     */
-   private File resourceDirectory;
+   protected File resourceDirectory;
    
    /**
     * Sets the source directory. This directory will contain any generated Java source.
@@ -79,7 +79,7 @@ abstract class AbstractWsProvideMojo extends AbstractToolsMojo
       if (verbose)
       {
          log.info("Classpath:");
-         for (String s : getClasspath())
+         for (String s : getClasspathElements())
          {
             log.info(" " + s);
          }
@@ -93,7 +93,7 @@ abstract class AbstractWsProvideMojo extends AbstractToolsMojo
          WSContractProvider provider = WSContractProvider.newInstance();
          setupProvider(provider, loader);
          provider.provide(endpointClass);
-         project.addCompileSourceRoot(sourceDirectory.getAbsolutePath());
+         updateProjectSourceRoots();
       }
       catch (Exception e)
       {
@@ -112,7 +112,7 @@ abstract class AbstractWsProvideMojo extends AbstractToolsMojo
       provider.setGenerateSource(generateSource);
       provider.setGenerateWsdl(generateWsdl);
       provider.setMessageStream(System.out);
-      File outputDir = getDestDir();
+      File outputDir = getOutputDirectory();
       if (outputDir != null)
       {
          provider.setOutputDirectory(outputDir);
@@ -125,5 +125,25 @@ abstract class AbstractWsProvideMojo extends AbstractToolsMojo
       {
          provider.setSourceDirectory(sourceDirectory);
       }
+   }
+
+   public boolean isGenerateWsdl()
+   {
+      return generateWsdl;
+   }
+
+   public File getResourceDirectory()
+   {
+      return resourceDirectory;
+   }
+
+   public File getSourceDirectory()
+   {
+      return sourceDirectory;
+   }
+
+   public String getEndpointClass()
+   {
+      return endpointClass;
    }
 }

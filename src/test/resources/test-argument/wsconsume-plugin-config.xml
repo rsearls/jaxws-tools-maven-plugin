@@ -1,0 +1,31 @@
+<project>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jboss.ws.plugins.maven</groupId>
+        <artifactId>jaxws-tools-plugin</artifactId>
+        <configuration>
+          <outputDirectory>output</outputDirectory>
+          <classpathElements>
+            <classpathElement>cp1</classpathElement>
+            <classpathElement>cp2</classpathElement>
+          </classpathElements>
+          <wsdls>
+            <wsdl>w1</wsdl>
+            <wsdl>w2</wsdl>
+          </wsdls>
+          <bindingFiles>
+            <bindingFile>b1</bindingFile>
+          </bindingFiles>
+          <catalog>catalog</catalog>
+          <sourceDirectory>source</sourceDirectory>
+          <targetPackage>tp</targetPackage>
+          <wsdlLocation>wl</wsdlLocation>
+          <target>t</target>
+          <extension>true</extension>
+          <verbose>true</verbose>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

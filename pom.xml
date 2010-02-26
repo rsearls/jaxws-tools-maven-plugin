@@ -49,7 +49,22 @@
       <version>${maven.plugin.api.version}</version>
     </dependency>
 
-    <!-- Non transient test dependencies: declared here just to prepare the local maven repo and use that in the embedded tests, making them faster and with simpler pom.xml files -->   
+    <!-- Non transient test dependencies -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.7</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.shared</groupId>
+      <artifactId>maven-plugin-testing-harness</artifactId>
+      <version>1.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- The following are declared here just to prepare the local maven repo and use that in the embedded tests, making them faster and with simpler pom.xml files -->   
     <dependency>
 	  <groupId>org.jboss.ws.native</groupId>
 	  <artifactId>jbossws-native-client</artifactId>

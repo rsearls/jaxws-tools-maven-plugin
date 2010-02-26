@@ -54,14 +54,20 @@ public class TestWsProvideMojo extends AbstractWsProvideMojo
    protected List<String> testClasspathElements;
 
    @Override
-   protected File getDestDir()
+   public File getOutputDirectory()
    {
       return outputDirectory;
    }
 
    @Override
-   protected List<String> getClasspath()
+   public List<String> getClasspathElements()
    {
       return testClasspathElements;
+   }
+   
+   @Override
+   protected void updateProjectSourceRoots()
+   {
+      project.addTestCompileSourceRoot(sourceDirectory.getAbsolutePath());
    }
 }
