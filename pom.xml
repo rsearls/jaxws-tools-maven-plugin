@@ -7,7 +7,7 @@
   <artifactId>maven-jaxws-tools-plugin</artifactId>
   <packaging>maven-plugin</packaging>
 
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0.GA</version>
 
   <!-- Parent -->
   <parent>
@@ -18,9 +18,9 @@
 
   <!-- Source Control Management -->
   <scm>
-    <connection>scm:svn:http://anonsvn.jboss.org/repos/jbossws/projects/plugins/maven/jaxws-tools/trunk</connection>
-    <developerConnection>scm:svn:https://svn.jboss.org/repos/jbossws/projects/plugins/maven/jaxws-tools/trunk</developerConnection>
-    <url>http://fisheye.jboss.com/viewrep/JBossWS/projects/plugins/maven/jaxws-tools/trunk</url>
+    <connection>scm:svn:http://anonsvn.jboss.org/repos/jbossws/projects/plugins/maven/jaxws-tools/tags/jaxws-tools-1.0.0.GA</connection>
+    <developerConnection>scm:svn:https://svn.jboss.org/repos/jbossws/projects/plugins/maven/jaxws-tools/tags/jaxws-tools-1.0.0.GA</developerConnection>
+    <url>http://fisheye.jboss.com/viewrep/JBossWS/projects/plugins/maven/jaxws-tools/tags/jaxws-tools-1.0.0.GA</url>
   </scm>
 
   <!-- Properties -->
