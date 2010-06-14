@@ -97,7 +97,7 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
       }
       catch (Exception e)
       {
-         throw new MojoExecutionException("Error while running wsconsume", e);
+         throw new MojoExecutionException("Error while running wsprovide", e);
       }
       finally
       {
