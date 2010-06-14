@@ -93,7 +93,7 @@
 	  <dependency>
 		<groupId>org.jboss.ws.metro</groupId>
 		<artifactId>jbossws-metro-client</artifactId>
-		<version>3.3.0.Beta1</version>
+		<version>3.3.1.GA</version>
 	  </dependency>
 	</dependencies>
 </project>
