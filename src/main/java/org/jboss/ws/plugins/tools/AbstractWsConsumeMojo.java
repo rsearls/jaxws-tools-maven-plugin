@@ -28,7 +28,6 @@ import java.util.List;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
-import org.jboss.wsf.spi.tools.WSContractConsumer;
 
 /**
  * Generic mojo for wsconsume tool
@@ -113,14 +112,29 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
       ClassLoader origLoader = Thread.currentThread().getContextClassLoader();
       try
       {
-         Thread.currentThread().setContextClassLoader(getMavenClasspathAwareClassLoader(origLoader));
-         WSContractConsumer consumer = WSContractConsumer.newInstance();
-         setupConsumer(consumer);
+         ClassLoader loader = getMavenClasspathAwareClassLoader(null);
+         Thread.currentThread().setContextClassLoader(loader);
+         
+         WSContractConsumerParams params = new WSContractConsumerParams();
+         params.setAdditionalCompilerClassPath(new LinkedList<String>(getClasspathElements()));
+         params.setBindingFiles(bindingFiles);
+         params.setCatalog(catalog);
+         params.setExtension(extension);
+         params.setGenerateSource(generateSource);
+         params.setLoader(loader);
+         params.setNoCompile(noCompile);
+         params.setOutputDirectory(getOutputDirectory());
+         params.setSourceDirectory(sourceDirectory);
+         params.setTarget(target);
+         params.setTargetPackage(targetPackage);
+         params.setWsdlLocation(wsdlLocation);
+         WSContractDelegate delegate = new WSContractDelegate();
+         
          for (String wsdl : wsdls)
          {
             try
             {
-               consumer.consume(wsdl);
+               delegate.runConsumer(params, wsdl);
             }
             catch (MalformedURLException mue)
             {
@@ -136,49 +150,6 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
       finally
       {
          Thread.currentThread().setContextClassLoader(origLoader);
-      }
-   }
-
-   private void setupConsumer(WSContractConsumer consumer)
-   {
-      consumer.setAdditionalCompilerClassPath(new LinkedList<String>(getClasspathElements()));
-      consumer.setMessageStream(System.out);
-      if (bindingFiles != null && !bindingFiles.isEmpty())
-      {
-         List<File> files = new LinkedList<File>();
-         for (String bf : bindingFiles)
-         {
-            files.add(new File(bf));
-         }
-         consumer.setBindingFiles(files);
-      }
-      if (catalog != null)
-      {
-         consumer.setCatalog(catalog);
-      }
-      consumer.setExtension(extension);
-      consumer.setGenerateSource(generateSource);
-      consumer.setNoCompile(noCompile);
-      File outputDir = getOutputDirectory();
-      if (outputDir != null)
-      {
-         consumer.setOutputDirectory(outputDir);
-      }
-      if (sourceDirectory != null)
-      {
-         consumer.setSourceDirectory(sourceDirectory);
-      }
-      if (target != null)
-      {
-         consumer.setTarget(target);
-      }
-      if (targetPackage != null)
-      {
-         consumer.setTargetPackage(targetPackage);
-      }
-      if (wsdlLocation != null)
-      {
-         consumer.setWsdlLocation(wsdlLocation);
       }
    }
 

@@ -25,7 +25,6 @@ import java.io.File;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
-import org.jboss.wsf.spi.tools.WSContractProvider;
 
 /**
  * Generic mojo for wsprovide tool
@@ -86,13 +85,23 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
       }
       
       ClassLoader origLoader = Thread.currentThread().getContextClassLoader();
-      ClassLoader loader = getMavenClasspathAwareClassLoader(origLoader);
+      ClassLoader loader = getMavenClasspathAwareClassLoader(null);
       Thread.currentThread().setContextClassLoader(loader);
       try
       {
-         WSContractProvider provider = WSContractProvider.newInstance();
-         setupProvider(provider, loader);
-         provider.provide(endpointClass);
+         WSContractProviderParams params = new WSContractProviderParams();
+         params.setEndpointClass(endpointClass);
+         params.setExtension(extension);
+         params.setGenerateSource(generateSource);
+         params.setGenerateWsdl(generateWsdl);
+         params.setLoader(loader);
+         params.setOutputDirectory(getOutputDirectory());
+         params.setResourceDirectory(resourceDirectory);
+         params.setSourceDirectory(sourceDirectory);
+         
+         WSContractDelegate delegate = new WSContractDelegate();
+         delegate.runProvider(params);
+         
          updateProjectSourceRoots();
       }
       catch (Exception e)
@@ -102,28 +111,6 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
       finally
       {
          Thread.currentThread().setContextClassLoader(origLoader);
-      }
-   }
-   
-   private void setupProvider(WSContractProvider provider, ClassLoader loader)
-   {
-      provider.setClassLoader(loader);
-      provider.setExtension(extension);
-      provider.setGenerateSource(generateSource);
-      provider.setGenerateWsdl(generateWsdl);
-      provider.setMessageStream(System.out);
-      File outputDir = getOutputDirectory();
-      if (outputDir != null)
-      {
-         provider.setOutputDirectory(outputDir);
-      }
-      if (resourceDirectory != null)
-      {
-         provider.setResourceDirectory(resourceDirectory);
-      }
-      if (sourceDirectory != null)
-      {
-         provider.setSourceDirectory(sourceDirectory);
       }
    }
 

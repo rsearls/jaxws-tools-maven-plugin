@@ -32,10 +32,6 @@
     <!-- For test -->
     <junit.version>4.7</junit.version>
     <maven.plugin.testing.harness.version>1.1</maven.plugin.testing.harness.version>
-    <jbossws.cxf.client.version>3.3.1.GA</jbossws.cxf.client.version>
-    <jbossws.metro.client.version>3.3.1.GA</jbossws.metro.client.version>
-    <jbossws.native.client.version>3.3.1.GA</jbossws.native.client.version>
-    <jbossxb.version>2.0.1.GA</jbossxb.version>
   </properties>
   
   <!-- Dependencies -->
@@ -70,56 +66,8 @@
       <version>${maven.plugin.testing.harness.version}</version>
       <scope>test</scope>
     </dependency>
-
-    <!-- The following are declared here just to prepare the local maven repo and use that in the embedded tests, making them faster and with simpler pom.xml files -->   
-    <dependency>
-	  <groupId>org.jboss.ws.native</groupId>
-	  <artifactId>jbossws-native-client</artifactId>
-	  <version>${jbossws.native.client.version}</version>
-	  <scope>test</scope>
-	</dependency>
-	<dependency>
-	  <groupId>org.jboss.ws.cxf</groupId>
-      <artifactId>jbossws-cxf-client</artifactId>
-      <version>${jbossws.cxf.client.version}</version>
-	  <scope>test</scope>
-    </dependency>
-    <dependency>
-	  <groupId>org.jboss.ws.metro</groupId>
-	  <artifactId>jbossws-metro-client</artifactId>
-	  <version>${jbossws.metro.client.version}</version>
-	  <scope>test</scope>
-	</dependency>
-    <dependency>
-      <groupId>org.jboss</groupId>
-      <artifactId>jbossxb</artifactId>
-      <version>${jbossxb.version}</version>
-      <optional>true</optional>
-	  <!-- <scope>test</scope> --> <!-- TODO Move this to test scope instead of making it optional; currently messes up classloader in wsprovide test with Native stack -->
-    </dependency>
+    
   </dependencies>
-
-  <profiles>
-    <profile>
-      <id>default-tools.jar</id>
-      <activation>
-        <property>
-          <name>java.vendor</name>
-          <value>Sun Microsystems Inc.</value>
-        </property>
-      </activation>
-      <dependencies>
-        <dependency>
-          <groupId>com.sun</groupId>
-          <artifactId>tools</artifactId>
-          <version>1.5.0</version>
-          <scope>system</scope>
-          <systemPath>${java.home}/../lib/tools.jar</systemPath>
-        </dependency>
-      </dependencies>
-    </profile>
-  </profiles>
-
 
   <reporting>
     <plugins>
