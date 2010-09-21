@@ -1,8 +1,3 @@
-package org.jboss.ws.plugins.tools;
-
-import java.io.File;
-import java.util.List;
-
 /*
  * JBoss, Home of Professional Open Source.
  * Copyright 2010, Red Hat Middleware LLC, and individual contributors
@@ -24,8 +19,14 @@ import java.util.List;
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.jboss.ws.plugins.tools;
+
+import java.io.File;
+import java.util.List;
+
 public class WSContractConsumerParams
 {
+   private boolean fork;
    private ClassLoader loader;
    private List<String> additionalCompilerClassPath;
    private List<String> bindingFiles;
@@ -38,7 +39,24 @@ public class WSContractConsumerParams
    private String target;
    private String targetPackage;
    private String wsdlLocation;
+   private String argLine;
 
+   public String getArgLine()
+   {
+      return argLine;
+   }
+   public void setArgLine(String argLine)
+   {
+      this.argLine = argLine;
+   }
+   public void setFork(boolean fork)
+   {
+      this.fork = fork;
+   }
+   public boolean isFork()
+   {
+      return fork;
+   }
    public void setLoader(ClassLoader loader)
    {
       this.loader = loader;

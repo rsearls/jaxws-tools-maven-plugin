@@ -61,6 +61,17 @@ abstract class AbstractToolsMojo extends AbstractMojo
    protected Boolean verbose;
    
    /**
+    * An optional additional argLine to be used when running in fork mode; can be used to set endorse dir, enable debugging, etc. 
+    * @parameter
+    */
+   protected String argLine;
+   
+   /**
+    * @parameter default-value="false"
+    */
+   protected Boolean fork;
+   
+   /**
     * Either ${build.outputDirectory} or ${build.testOutputDirectory}.
     */
    public abstract File getOutputDirectory();
@@ -102,6 +113,16 @@ abstract class AbstractToolsMojo extends AbstractMojo
    public Boolean isVerbose()
    {
       return verbose;
+   }
+   
+   public String getArgLine()
+   {
+      return argLine;
+   }
+   
+   public Boolean isFork()
+   {
+      return fork;
    }
    
 }

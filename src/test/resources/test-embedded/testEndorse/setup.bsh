@@ -1,0 +1,7 @@
+import java.io.*;
+import org.jboss.test.ws.plugins.tools.helpers.*;
+import java.util.*;
+import java.util.regex.*;
+
+TestEndorseHelper helper = new TestEndorseHelper();
+helper.setup(basedir, localRepositoryPath, context);

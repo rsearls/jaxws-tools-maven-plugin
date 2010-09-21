@@ -24,11 +24,16 @@ package org.jboss.ws.plugins.tools;
 import java.io.File;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.codehaus.plexus.util.Os;
+
 public class WSContractDelegate
 {
+   private static final PrintStream PS = System.out;
+   
    public void runProvider(WSContractProviderParams params) throws Exception
    {
       ClassLoader loader = params.getLoader();
@@ -41,6 +46,18 @@ public class WSContractDelegate
    
    public void runConsumer(WSContractConsumerParams params, String wsdl) throws Exception
    {
+      if (params.isFork())
+      {
+         runConsumerOutOfProcess(params, wsdl);
+      }
+      else
+      {
+         runConsumerInProcess(params, wsdl);
+      }
+   }
+   
+   private void runConsumerInProcess(WSContractConsumerParams params, String wsdl) throws Exception
+   {
       ClassLoader loader = params.getLoader();
       Class<?> consumerClass = loader.loadClass("org.jboss.wsf.spi.tools.WSContractConsumer");
       Object consumer = consumerClass.getMethod("newInstance").invoke(null);
@@ -49,11 +66,108 @@ public class WSContractDelegate
       m.invoke(consumer, new Object[]{wsdl});
    }
    
+   private void runConsumerOutOfProcess(WSContractConsumerParams params, String wsdl) throws Exception
+   {
+      List<String> commandList = new ArrayList<String>();
+      if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
+      {
+          if ( Os.isFamily( Os.FAMILY_WIN9X ) )
+          {
+             commandList.add("command.com /c");
+          }
+          else
+          {
+             commandList.add("cmd.exe /c");
+          }
+      }
+      commandList.add("java");
+      if (params.getArgLine() != null)
+      {
+         commandList.add(params.getArgLine());
+      }
+      List<String> cp = params.getAdditionalCompilerClassPath();
+      if (cp != null && !cp.isEmpty())
+      {
+         commandList.add("-classpath ");
+         StringBuilder additionalClasspath = new StringBuilder();
+         for (String c : cp)
+         {
+            additionalClasspath.append(c);
+            additionalClasspath.append(File.pathSeparator);
+         }
+         additionalClasspath.deleteCharAt(additionalClasspath.length() - 1);
+         commandList.add(additionalClasspath.toString());
+      }
+      commandList.add("org.jboss.wsf.spi.tools.cmd.WSConsume");
+      List<String> bindingFiles = params.getBindingFiles();
+      if (bindingFiles != null && !bindingFiles.isEmpty())
+      {
+         commandList.add("-b");
+         commandList.addAll(bindingFiles);
+      }
+      if (params.isGenerateSource())
+      {
+         commandList.add("-k");
+      }
+      if (params.getCatalog() != null)
+      {
+         commandList.add("-c");
+         commandList.add(params.getCatalog().getAbsolutePath());
+      }
+      if (params.getTargetPackage() != null)
+      {
+         commandList.add("-p");
+         commandList.add(params.getTargetPackage());
+      }
+      if (params.getWsdlLocation() != null)
+      {
+         commandList.add("-w");
+         commandList.add(params.getWsdlLocation());
+      }
+      if (params.getOutputDirectory() != null)
+      {
+         commandList.add("-o");
+         commandList.add(params.getOutputDirectory().getAbsolutePath());
+      }
+      if (params.getSourceDirectory() != null)
+      {
+         commandList.add("-s");
+         commandList.add(params.getSourceDirectory().getAbsolutePath());
+      }
+      if (params.getTarget() != null)
+      {
+         commandList.add("-t");
+         commandList.add(params.getTarget());
+      }
+      if (params.isExtension())
+      {
+         commandList.add("-e");
+      }
+      if (params.isNoCompile())
+      {
+         commandList.add("-n");
+      }
+      commandList.add(wsdl);
+      StringBuilder command = new StringBuilder();
+      for (String s : commandList)
+      {
+         command.append(s);
+         command.append(" ");
+      }
+      System.out.println("************** commandline: ***" + command.toString()+"***");
+      Process p = Runtime.getRuntime().exec(command.toString());
+      int result = p.waitFor();
+      if (result != 0)
+      {
+         throw new Exception("Process terminated with code " + result);
+      }
+   }
+   
    private static void setupConsumer(Class<?> consumerClass, Object consumer, WSContractConsumerParams params) throws Exception
    {
       callMethod(consumerClass, consumer, "setAdditionalCompilerClassPath", params.getAdditionalCompilerClassPath());
       Method m = consumerClass.getMethod("setMessageStream", new Class<?>[]{PrintStream.class});
-      m.invoke(consumer, new Object[]{System.out});
+      m.invoke(consumer, new Object[]{PS});
       List<String> bindingFiles = params.getBindingFiles();
       if (bindingFiles != null && !bindingFiles.isEmpty())
       {
@@ -120,7 +234,7 @@ public class WSContractDelegate
       callMethod(providerClass, provider, "setGenerateSource", params.isGenerateSource());
       callMethod(providerClass, provider, "setGenerateWsdl", params.isGenerateWsdl());
       Method m2 = providerClass.getMethod("setMessageStream", new Class<?>[]{PrintStream.class});
-      m2.invoke(provider, new Object[]{System.out});
+      m2.invoke(provider, new Object[]{PS});
       if (params.getOutputDirectory() != null)
       {
          callMethod(providerClass, provider, "setOutputDirectory", params.getOutputDirectory());
