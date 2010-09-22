@@ -59,6 +59,7 @@
                 <targetPackage>foo.bar2</targetPackage>
                 <sourceDirectory>${project.build.directory}/generated/java-sources</sourceDirectory>
                 <extension>true</extension>
+                <fork>true</fork>
               </configuration>
             </execution>
             <execution>
@@ -83,6 +84,7 @@
                   <wsdl>${basedir}/test.wsdl</wsdl>
                   <wsdl>${basedir}/test2.wsdl</wsdl>
                 </wsdls>
+                <fork>true</fork>
               </configuration>
             </execution>
           </executions>

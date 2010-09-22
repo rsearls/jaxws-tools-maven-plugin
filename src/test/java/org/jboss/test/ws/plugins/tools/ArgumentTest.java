@@ -65,6 +65,8 @@ public class ArgumentTest extends AbstractToolsMojoTestCase
       assertThat(mojo.getBindingFiles(), hasItems(new String[] { "b1" }));
       assertThat(mojo.getClasspathElements(), hasItems(new String[] { "cp1", "cp2" }));
       assertThat(mojo.getWsdls(), hasItems(new String[] { "w1", "w2" }));
+      assertTrue(mojo.isFork());
+      assertEquals("-Dfoo=bar", mojo.getArgLine());
    }
 
    @Test
@@ -86,6 +88,8 @@ public class ArgumentTest extends AbstractToolsMojoTestCase
       assertEquals("source", mojo.getSourceDirectory().getName());
       assertTrue(mojo.isVerbose());
       assertThat(mojo.getClasspathElements(), hasItems(new String[] { "cp1", "cp2" }));
+      assertTrue(mojo.isFork());
+      assertEquals("-Dfoo=bar", mojo.getArgLine());
    }
 
 }

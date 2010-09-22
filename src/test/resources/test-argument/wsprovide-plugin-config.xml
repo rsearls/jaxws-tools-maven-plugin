@@ -16,6 +16,8 @@
           <endpointClass>endpoint</endpointClass>
           <extension>true</extension>
           <verbose>true</verbose>
+          <fork>true</fork>
+          <argLine>-Dfoo=bar</argLine>
         </configuration>
       </plugin>
     </plugins>
