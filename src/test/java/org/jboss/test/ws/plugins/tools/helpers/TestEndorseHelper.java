@@ -36,6 +36,7 @@ import java.util.Map;
 public class TestEndorseHelper implements VerifyScriptHelper, SetupScriptHelper
 {
    private Long lastModificationTime = null;
+   private Long lastModificationTime2 = null;
    private static final String JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR = "public EndpointService(URL wsdlLocation, WebServiceFeature... features)";
    private static final String JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR_CONTENTS = "super(wsdlLocation, serviceName, features);";
 
@@ -61,11 +62,42 @@ public class TestEndorseHelper implements VerifyScriptHelper, SetupScriptHelper
          return false;
       }
       
+      //second execution checks
+      File endpointServiceFile2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsconsume" + File.separator + "java" +
+            File.separator + "foo" + File.separator + "test" + File.separator + "bar" + File.separator + "EndpointService.java");
+      if (!endpointServiceFile2.exists())
+      {
+         System.out.println(endpointServiceFile2 + " not found!");
+         return false;
+      }
+      if (lastModificationTime2 != null && endpointServiceFile2.lastModified() == lastModificationTime2)
+      {
+         System.out.println(endpointServiceFile2 + " was not modified by the plugin!");
+         return false;
+      }
+      if (!readContents(endpointServiceFile2).contains(JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR_CONTENTS))
+      {
+         System.out.println("Could not find JAXWS 2.2 constructor '" + JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR + "' in " + endpointServiceFile2);
+         return false;
+      }
+      
       //classes checks
       File classesFoo = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "classes" + File.separator + "foo");
       if (!classesFoo.exists())
       {
          System.out.println(classesFoo + " dir not found!");
+         return false;
+      }
+      File classesFooBar = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "classes" + File.separator + "foo" + File.separator + "bar");
+      if (!classesFooBar.exists())
+      {
+         System.out.println(classesFooBar + " dir not found!");
+         return false;
+      }
+      File classesFooTest = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "test-classes" + File.separator + "foo" + File.separator + "test");
+      if (!classesFooTest.exists())
+      {
+         System.out.println(classesFooTest + " dir not found!");
          return false;
       }
       
@@ -75,11 +107,20 @@ public class TestEndorseHelper implements VerifyScriptHelper, SetupScriptHelper
    @Override
    public void setup(File basedir, File localRepositoryPath, Map<?, ?> context) throws Exception
    {
+      //first execution
       File endpointServiceFile = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsconsume" + File.separator + "java" +
             File.separator + "foo" + File.separator + "bar" + File.separator + "EndpointService.java");
       if (endpointServiceFile.exists())
       {
          this.lastModificationTime = endpointServiceFile.lastModified();
+      }
+      
+      //second execution
+      File endpointServiceFile2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsconsume" + File.separator + "java" +
+            File.separator + "foo" + File.separator + "test" + File.separator + "bar" + File.separator + "EndpointService.java");
+      if (endpointServiceFile2.exists())
+      {
+         this.lastModificationTime2 = endpointServiceFile2.lastModified();
       }
    }
    

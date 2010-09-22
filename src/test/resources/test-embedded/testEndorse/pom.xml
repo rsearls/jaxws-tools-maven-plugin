@@ -52,6 +52,18 @@
                 <targetPackage>foo.bar</targetPackage>
               </configuration>
             </execution>
+            <execution>
+              <id>Second execution</id>
+              <goals>
+                <goal>wsconsume-test</goal>
+              </goals>
+              <configuration>
+                <wsdls>
+                  <wsdl>${basedir}/test.wsdl</wsdl>
+                </wsdls>
+                <targetPackage>foo.test.bar</targetPackage>
+              </configuration>
+            </execution>
           </executions>
         </plugin>
         <plugin>

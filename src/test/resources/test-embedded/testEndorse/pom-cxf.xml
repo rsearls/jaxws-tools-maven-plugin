@@ -34,9 +34,9 @@
           <artifactId>maven-jaxws-tools-plugin</artifactId>
           <version>@pom.version@</version>
           <configuration>
-            <target>2.2</target>
+            <target>2.2</target> <!-- This is actually ignored by the CXF tooling, the jaxws 2.2 version is being used because of the endorsing here -->
             <verbose>true</verbose>
-            <fork>true</fork>
+            <fork>true</fork> <!-- Required for endorsing -->
             <argLine>-Djava.endorsed.dirs=${basedir}/target/endorsed</argLine>
           </configuration>
           <executions>
@@ -50,6 +50,18 @@
                   <wsdl>${basedir}/test.wsdl</wsdl>
                 </wsdls>
                 <targetPackage>foo.bar</targetPackage>
+              </configuration>
+            </execution>
+            <execution>
+              <id>Second execution</id>
+              <goals>
+                <goal>wsconsume-test</goal>
+              </goals>
+              <configuration>
+                <wsdls>
+                  <wsdl>${basedir}/test.wsdl</wsdl>
+                </wsdls>
+                <targetPackage>foo.test.bar</targetPackage>
               </configuration>
             </execution>
           </executions>
