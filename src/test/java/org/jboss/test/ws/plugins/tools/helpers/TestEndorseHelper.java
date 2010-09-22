@@ -37,6 +37,8 @@ public class TestEndorseHelper implements VerifyScriptHelper, SetupScriptHelper
 {
    private Long lastModificationTime = null;
    private Long lastModificationTime2 = null;
+   private Long wsdlLastModificationTime = null;
+   private Long wsdlLastModificationTime2 = null;
    private static final String JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR = "public EndpointService(URL wsdlLocation, WebServiceFeature... features)";
    private static final String JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR_CONTENTS = "super(wsdlLocation, serviceName, features);";
 
@@ -101,6 +103,30 @@ public class TestEndorseHelper implements VerifyScriptHelper, SetupScriptHelper
          return false;
       }
       
+      //wsdl check for wsprovide executions
+      File wsdl = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsprovide" + File.separator + "resources" +
+            File.separator + "TestEndpointService.wsdl");
+      File wsdl2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsprovide" + File.separator + "resources" +
+            File.separator + "TestEndpoint2Service.wsdl");
+      boolean wsdlCheck = internalVerify(wsdl, wsdlLastModificationTime);
+      wsdlCheck = wsdlCheck && internalVerify(wsdl2, wsdlLastModificationTime2);
+      if (!wsdlCheck) return false;
+      
+      return true;
+   }
+   
+   private static boolean internalVerify(File file, Long modificationTime)
+   {
+      if (!file.exists())
+      {
+         System.out.println(file + " not found!");
+         return false;
+      }
+      if (modificationTime != null && file.lastModified() == modificationTime)
+      {
+         System.out.println(file + " was not modified by the plugin!");
+         return false;
+      }
       return true;
    }
 
@@ -121,6 +147,20 @@ public class TestEndorseHelper implements VerifyScriptHelper, SetupScriptHelper
       if (endpointServiceFile2.exists())
       {
          this.lastModificationTime2 = endpointServiceFile2.lastModified();
+      }
+      
+      //wsprovide executions
+      File wsdl = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsprovide" + File.separator + "resources" +
+            File.separator + "TestEndpointService.wsdl");
+      if (wsdl.exists())
+      {
+         this.wsdlLastModificationTime = wsdl.lastModified();
+      }
+      File wsdl2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsprovide" + File.separator + "resources" +
+            File.separator + "TestEndpointService2.wsdl");
+      if (wsdl2.exists())
+      {
+         this.wsdlLastModificationTime2 = wsdl2.lastModified();
       }
    }
    

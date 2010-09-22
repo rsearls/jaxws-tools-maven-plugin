@@ -23,6 +23,7 @@ package org.jboss.ws.plugins.tools;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URLClassLoader;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -112,7 +113,7 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
       ClassLoader origLoader = Thread.currentThread().getContextClassLoader();
       try
       {
-         ClassLoader loader = getMavenClasspathAwareClassLoader(null);
+         URLClassLoader loader = getMavenClasspathAwareClassLoader();
          Thread.currentThread().setContextClassLoader(loader);
          
          WSContractConsumerParams params = new WSContractConsumerParams();

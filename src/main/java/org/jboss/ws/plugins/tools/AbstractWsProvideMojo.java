@@ -22,6 +22,7 @@
 package org.jboss.ws.plugins.tools;
 
 import java.io.File;
+import java.net.URLClassLoader;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
@@ -85,7 +86,7 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
       }
       
       ClassLoader origLoader = Thread.currentThread().getContextClassLoader();
-      ClassLoader loader = getMavenClasspathAwareClassLoader(null);
+      URLClassLoader loader = getMavenClasspathAwareClassLoader();
       Thread.currentThread().setContextClassLoader(loader);
       try
       {
@@ -98,6 +99,8 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
          params.setOutputDirectory(getOutputDirectory());
          params.setResourceDirectory(resourceDirectory);
          params.setSourceDirectory(sourceDirectory);
+         params.setFork(fork);
+         params.setArgLine(argLine);
          
          WSContractDelegate delegate = new WSContractDelegate();
          delegate.runProvider(params);

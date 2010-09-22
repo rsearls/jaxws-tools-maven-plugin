@@ -22,18 +22,37 @@
 package org.jboss.ws.plugins.tools;
 
 import java.io.File;
+import java.net.URLClassLoader;
 
 public class WSContractProviderParams
 {
+   private boolean fork;
    private String endpointClass;
-   private ClassLoader loader;
+   private URLClassLoader loader;
    private boolean extension;
    private boolean generateSource;
    private boolean generateWsdl;
    private File outputDirectory;
    private File resourceDirectory;
    private File sourceDirectory;
+   private String argLine;
 
+   public boolean isFork()
+   {
+      return fork;
+   }
+   public void setFork(boolean fork)
+   {
+      this.fork = fork;
+   }
+   public String getArgLine()
+   {
+      return argLine;
+   }
+   public void setArgLine(String argLine)
+   {
+      this.argLine = argLine;
+   }
    public String getEndpointClass()
    {
       return endpointClass;
@@ -42,11 +61,11 @@ public class WSContractProviderParams
    {
       this.endpointClass = endpointClass;
    }
-   public ClassLoader getLoader()
+   public URLClassLoader getLoader()
    {
       return loader;
    }
-   public void setLoader(ClassLoader loader)
+   public void setLoader(URLClassLoader loader)
    {
       this.loader = loader;
    }

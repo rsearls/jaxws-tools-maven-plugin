@@ -24,6 +24,7 @@ package org.jboss.ws.plugins.tools;
 import java.io.File;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,12 +37,44 @@ public class WSContractDelegate
    
    public void runProvider(WSContractProviderParams params) throws Exception
    {
+      if (params.isFork())
+      {
+         runProviderOutOfProcess(params);
+      }
+      else
+      {
+         runProviderInProcess(params);
+      }
+   }
+   
+   private void runProviderInProcess(WSContractProviderParams params) throws Exception
+   {
       ClassLoader loader = params.getLoader();
       Class<?> providerClass = loader.loadClass("org.jboss.wsf.spi.tools.WSContractProvider");
       Object provider = providerClass.getMethod("newInstance").invoke(null);
       setupProvider(providerClass, provider, params);
       Method m = providerClass.getMethod("provide", new Class<?>[]{String.class});
       m.invoke(provider, new Object[]{params.getEndpointClass()});
+   }
+   
+   private void runProviderOutOfProcess(WSContractProviderParams params) throws Exception
+   {
+      List<String> classpath = new LinkedList<String>();
+      URL[] urls = params.getLoader().getURLs();
+      for (URL url : urls)
+      {
+         classpath.add(url.getFile());
+      }
+      List<String> commandList = initCommandList(params.getArgLine(), classpath, "org.jboss.wsf.spi.tools.cmd.WSProvide");
+      String commandLine = getProviderCommandLine(commandList, params);
+      
+      System.out.println("*oooooooooooooooooooooooooo* commandline: ***" + commandLine +"*oooooooooooooooooooo*");
+      Process p = Runtime.getRuntime().exec(commandLine);
+      int result = p.waitFor();
+      if (result != 0)
+      {
+         throw new Exception("Process terminated with code " + result);
+      }
    }
    
    public void runConsumer(WSContractConsumerParams params, String wsdl) throws Exception
@@ -68,6 +101,20 @@ public class WSContractDelegate
    
    private void runConsumerOutOfProcess(WSContractConsumerParams params, String wsdl) throws Exception
    {
+      List<String> commandList = initCommandList(params.getArgLine(), params.getAdditionalCompilerClassPath(), "org.jboss.wsf.spi.tools.cmd.WSConsume");
+      String commandLine = getConsumerCommandLine(commandList, params, wsdl);
+      
+      System.out.println("************** commandline: ***" + commandLine +"***");
+      Process p = Runtime.getRuntime().exec(commandLine);
+      int result = p.waitFor();
+      if (result != 0)
+      {
+         throw new Exception("Process terminated with code " + result);
+      }
+   }
+   
+   private static List<String> initCommandList(String argLine, List<String> classpath, String toolClass)
+   {
       List<String> commandList = new ArrayList<String>();
       if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
       {
@@ -81,11 +128,11 @@ public class WSContractDelegate
           }
       }
       commandList.add("java");
-      if (params.getArgLine() != null)
+      if (argLine != null)
       {
-         commandList.add(params.getArgLine());
+         commandList.add(argLine);
       }
-      List<String> cp = params.getAdditionalCompilerClassPath();
+      List<String> cp = classpath;
       if (cp != null && !cp.isEmpty())
       {
          commandList.add("-classpath ");
@@ -98,7 +145,12 @@ public class WSContractDelegate
          additionalClasspath.deleteCharAt(additionalClasspath.length() - 1);
          commandList.add(additionalClasspath.toString());
       }
-      commandList.add("org.jboss.wsf.spi.tools.cmd.WSConsume");
+      commandList.add(toolClass);
+      return commandList;
+   }
+   
+   private static String getConsumerCommandLine(List<String> commandList, WSContractConsumerParams params, String wsdl)
+   {
       List<String> bindingFiles = params.getBindingFiles();
       if (bindingFiles != null && !bindingFiles.isEmpty())
       {
@@ -154,13 +206,46 @@ public class WSContractDelegate
          command.append(s);
          command.append(" ");
       }
-      System.out.println("************** commandline: ***" + command.toString()+"***");
-      Process p = Runtime.getRuntime().exec(command.toString());
-      int result = p.waitFor();
-      if (result != 0)
+      return command.toString();
+   }
+   
+   private static String getProviderCommandLine(List<String> commandList, WSContractProviderParams params)
+   {
+      if (params.isGenerateSource())
       {
-         throw new Exception("Process terminated with code " + result);
+         commandList.add("-k");
       }
+      if (params.isGenerateWsdl())
+      {
+         commandList.add("-w");
+      }
+      if (params.getOutputDirectory() != null)
+      {
+         commandList.add("-o");
+         commandList.add(params.getOutputDirectory().getAbsolutePath());
+      }
+      if (params.getSourceDirectory() != null)
+      {
+         commandList.add("-s");
+         commandList.add(params.getSourceDirectory().getAbsolutePath());
+      }
+      if (params.getResourceDirectory() != null)
+      {
+         commandList.add("-r");
+         commandList.add(params.getResourceDirectory().getAbsolutePath());
+      }
+      if (params.isExtension())
+      {
+         commandList.add("-e");
+      }
+      commandList.add(params.getEndpointClass());
+      StringBuilder command = new StringBuilder();
+      for (String s : commandList)
+      {
+         command.append(s);
+         command.append(" ");
+      }
+      return command.toString();
    }
    
    private static void setupConsumer(Class<?> consumerClass, Object consumer, WSContractConsumerParams params) throws Exception

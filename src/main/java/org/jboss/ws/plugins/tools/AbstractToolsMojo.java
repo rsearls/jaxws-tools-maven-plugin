@@ -86,7 +86,7 @@ abstract class AbstractToolsMojo extends AbstractMojo
     */
    protected abstract void updateProjectSourceRoots();
    
-   protected ClassLoader getMavenClasspathAwareClassLoader(ClassLoader parent)
+   protected URLClassLoader getMavenClasspathAwareClassLoader()
    {
       List<String> classpath = getClasspathElements();
       final int size = classpath.size();
@@ -102,7 +102,7 @@ abstract class AbstractToolsMojo extends AbstractMojo
             getLog().warn("Skipping invalid classpath element: " + classpath.get(i));
          }
       }
-      return new URLClassLoader(urls, parent);
+      return new URLClassLoader(urls, null);
    }
 
    public Boolean getExtension()
