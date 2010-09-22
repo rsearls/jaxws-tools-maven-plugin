@@ -59,7 +59,15 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
     * @parameter
     */
    private File catalog;
-
+   
+   /**
+    * Enables or disables processing of implicit SOAP headers (i.e. SOAP headers
+    * defined in the wsdl:binding but not wsdl:portType section.) Default is false.
+    * 
+    * @parameter default-value="false"
+    */
+   protected Boolean additionalHeaders;
+   
    /**
     * Sets the source directory. This directory will contain any generated Java source.
     * If the directory does not exist, it will be created.
@@ -120,6 +128,7 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
          params.setAdditionalCompilerClassPath(new LinkedList<String>(getClasspathElements()));
          params.setBindingFiles(bindingFiles);
          params.setCatalog(catalog);
+         params.setAdditionalHeaders(additionalHeaders);
          params.setExtension(extension);
          params.setGenerateSource(generateSource);
          params.setLoader(loader);
@@ -189,5 +198,10 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
    public String getTarget()
    {
       return target;
+   }
+   
+   public Boolean isAdditionalHeaders()
+   {
+      return additionalHeaders;
    }
 }

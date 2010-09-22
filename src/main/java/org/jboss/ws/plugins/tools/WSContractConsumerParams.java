@@ -31,6 +31,7 @@ public class WSContractConsumerParams
    private List<String> additionalCompilerClassPath;
    private List<String> bindingFiles;
    private File catalog;
+   private boolean additionalHeaders;
    private boolean extension;
    private boolean generateSource;
    private boolean noCompile;
@@ -41,6 +42,14 @@ public class WSContractConsumerParams
    private String wsdlLocation;
    private String argLine;
 
+   public boolean isAdditionalHeaders()
+   {
+      return additionalHeaders;
+   }
+   public void setAdditionalHeaders(boolean additionalHeaders)
+   {
+      this.additionalHeaders = additionalHeaders;
+   }
    public String getArgLine()
    {
       return argLine;

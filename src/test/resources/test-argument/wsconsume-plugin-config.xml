@@ -17,6 +17,7 @@
           <bindingFiles>
             <bindingFile>b1</bindingFile>
           </bindingFiles>
+          <additionalHeaders>true</additionalHeaders>
           <catalog>catalog</catalog>
           <sourceDirectory>source</sourceDirectory>
           <targetPackage>tp</targetPackage>

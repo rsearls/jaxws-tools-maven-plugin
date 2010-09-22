@@ -62,6 +62,7 @@ public class ArgumentTest extends AbstractToolsMojoTestCase
       assertEquals("wl", mojo.getWsdlLocation());
       assertEquals("source", mojo.getSourceDirectory().getName());
       assertTrue(mojo.isVerbose());
+      assertTrue(mojo.isAdditionalHeaders());
       assertThat(mojo.getBindingFiles(), hasItems(new String[] { "b1" }));
       assertThat(mojo.getClasspathElements(), hasItems(new String[] { "cp1", "cp2" }));
       assertThat(mojo.getWsdls(), hasItems(new String[] { "w1", "w2" }));

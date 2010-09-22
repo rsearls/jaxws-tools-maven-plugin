@@ -209,6 +209,10 @@ public class WSContractDelegate
       {
          commandList.add("-n");
       }
+      if (params.isAdditionalHeaders())
+      {
+         commandList.add("-a");
+      }
       commandList.add(wsdl);
       StringBuilder command = new StringBuilder();
       for (String s : commandList)
@@ -277,6 +281,7 @@ public class WSContractDelegate
       {
          callMethod(consumerClass, consumer, "setCatalog", params.getCatalog());
       }
+      callMethod(consumerClass, consumer, "setAdditionalHeaders", params.isAdditionalHeaders());
       callMethod(consumerClass, consumer, "setExtension", params.isExtension());
       callMethod(consumerClass, consumer, "setGenerateSource", params.isGenerateSource());
       callMethod(consumerClass, consumer, "setNoCompile", params.isNoCompile());
