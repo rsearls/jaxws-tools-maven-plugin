@@ -29,11 +29,20 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.codehaus.plexus.util.Os;
+import org.apache.maven.plugin.logging.Log;
+import org.codehaus.plexus.util.cli.CommandLineUtils;
+import org.codehaus.plexus.util.cli.Commandline;
+import org.jboss.ws.plugins.tools.MavenLogStreamConsumer.Type;
 
 public class WSContractDelegate
 {
    private static final PrintStream PS = System.out;
+   private Log log;
+   
+   public WSContractDelegate(Log log)
+   {
+      this.log = log;
+   }
    
    public void runProvider(WSContractProviderParams params) throws Exception
    {
@@ -68,9 +77,15 @@ public class WSContractDelegate
       List<String> commandList = initCommandList(params.getArgLine(), classpath, "org.jboss.wsf.spi.tools.cmd.WSProvide");
       String commandLine = getProviderCommandLine(commandList, params);
       
-      System.out.println("*oooooooooooooooooooooooooo* commandline: ***" + commandLine +"*oooooooooooooooooooo*");
-      Process p = Runtime.getRuntime().exec(commandLine);
-      int result = p.waitFor();
+      if (log.isDebugEnabled())
+      {
+         log.debug("Running command line: " + commandLine);
+      }
+      
+      MavenLogStreamConsumer out = new MavenLogStreamConsumer(log, Type.OUTPUT);
+      MavenLogStreamConsumer err = new MavenLogStreamConsumer(log, Type.ERROR);
+      int result = CommandLineUtils.executeCommandLine(new Commandline(commandLine), out, err);
+      
       if (result != 0)
       {
          throw new Exception("Process terminated with code " + result);
@@ -104,9 +119,15 @@ public class WSContractDelegate
       List<String> commandList = initCommandList(params.getArgLine(), params.getAdditionalCompilerClassPath(), "org.jboss.wsf.spi.tools.cmd.WSConsume");
       String commandLine = getConsumerCommandLine(commandList, params, wsdl);
       
-      System.out.println("************** commandline: ***" + commandLine +"***");
-      Process p = Runtime.getRuntime().exec(commandLine);
-      int result = p.waitFor();
+      if (log.isDebugEnabled())
+      {
+         log.debug("Running command line: " + commandLine);
+      }
+      
+      MavenLogStreamConsumer out = new MavenLogStreamConsumer(log, Type.OUTPUT);
+      MavenLogStreamConsumer err = new MavenLogStreamConsumer(log, Type.ERROR);
+      int result = CommandLineUtils.executeCommandLine(new Commandline(commandLine), out, err);
+      
       if (result != 0)
       {
          throw new Exception("Process terminated with code " + result);
@@ -116,17 +137,6 @@ public class WSContractDelegate
    private static List<String> initCommandList(String argLine, List<String> classpath, String toolClass)
    {
       List<String> commandList = new ArrayList<String>();
-      if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
-      {
-          if ( Os.isFamily( Os.FAMILY_WIN9X ) )
-          {
-             commandList.add("command.com /c");
-          }
-          else
-          {
-             commandList.add("cmd.exe /c");
-          }
-      }
       commandList.add("java");
       if (argLine != null)
       {

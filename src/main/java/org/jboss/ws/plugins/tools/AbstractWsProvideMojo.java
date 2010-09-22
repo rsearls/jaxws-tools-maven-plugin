@@ -102,7 +102,7 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
          params.setFork(fork);
          params.setArgLine(argLine);
          
-         WSContractDelegate delegate = new WSContractDelegate();
+         WSContractDelegate delegate = new WSContractDelegate(getLog());
          delegate.runProvider(params);
          
          updateProjectSourceRoots();
