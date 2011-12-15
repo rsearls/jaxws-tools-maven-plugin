@@ -23,6 +23,7 @@ package org.jboss.ws.plugins.tools;
 
 import java.io.File;
 import java.net.URLClassLoader;
+import java.util.List;
 
 public class WSContractProviderParams
 {
@@ -36,7 +37,16 @@ public class WSContractProviderParams
    private File resourceDirectory;
    private File sourceDirectory;
    private String argLine;
+   private List<String> additionalPluginDependencies;
 
+   public List<String> getAdditionalPluginDependencies()
+   {
+      return additionalPluginDependencies;
+   }
+   public void setAdditionalPluginDependencies(List<String> additionalPluginDependencies)
+   {
+      this.additionalPluginDependencies = additionalPluginDependencies;
+   }
    public boolean isFork()
    {
       return fork;

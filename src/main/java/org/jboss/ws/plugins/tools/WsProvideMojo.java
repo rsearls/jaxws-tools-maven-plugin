@@ -24,6 +24,8 @@ package org.jboss.ws.plugins.tools;
 import java.io.File;
 import java.util.List;
 
+import org.apache.maven.artifact.Artifact;
+
 /**
  * Runs wsprovide tool
  * 
@@ -52,6 +54,15 @@ public class WsProvideMojo extends AbstractWsProvideMojo
     * @readonly
     */
    protected List<String> classpathElements;
+   
+   /**
+    * 
+    * 
+    * @parameter default-value="${plugin.artifacts}"
+    * @required
+    * @readonly
+    */
+   private List<Artifact> pluginArtifacts;
 
    @Override
    protected void updateProjectSourceRoots()
@@ -69,5 +80,11 @@ public class WsProvideMojo extends AbstractWsProvideMojo
    public List<String> getClasspathElements()
    {
       return classpathElements;
+   }
+
+   @Override
+   public List<Artifact> getPluginArtifacts()
+   {
+      return pluginArtifacts;
    }
 }

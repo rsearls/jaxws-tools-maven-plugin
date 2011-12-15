@@ -25,8 +25,10 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 
@@ -81,6 +83,8 @@ abstract class AbstractToolsMojo extends AbstractMojo
     */
    public abstract List<String> getClasspathElements();
    
+   public abstract List<Artifact> getPluginArtifacts();
+   
    /**
     * Update the current Maven project source roots with the generated classes / resources
     */
@@ -103,6 +107,36 @@ abstract class AbstractToolsMojo extends AbstractMojo
          }
       }
       return new URLClassLoader(urls, null);
+   }
+   
+   /**
+    * Return the plugin dependencies that are required to actually call the tools
+    * (jbossws-common-tools and his transitive dependencies getopt and log4j)
+         //at the *end* of the list, add the required plugin dependency 
+         //that do not come in from the stack dependency tree because:
+         //1) jbossws-common-tools is not a required dep for stack clients
+         //2) log4j and getopt need to be provided scope deps, hence are not transitive
+    *  
+    * @return a list with the required plugin dependencies
+    */
+   protected List<String> getRequiredPluginDependencyPaths()
+   {
+      List<String> result = new ArrayList<String>(3);
+      for (Artifact s : getPluginArtifacts()) {
+         if ("org.jboss.ws".equals(s.getGroupId()) && "jbossws-common-tools".equals(s.getArtifactId()))
+         {
+            result.add(s.getFile().getAbsolutePath());
+         }
+         else if ("gnu-getopt".equals(s.getGroupId()) && "getopt".equals(s.getArtifactId()))
+         {
+            result.add(s.getFile().getAbsolutePath());
+         }
+         else if ("log4j".equals(s.getGroupId()) && "log4j".equals(s.getArtifactId()))
+         {
+            result.add(s.getFile().getAbsolutePath());
+         }
+      }
+      return result;
    }
 
    public Boolean getExtension()

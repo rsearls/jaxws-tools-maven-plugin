@@ -24,6 +24,8 @@ package org.jboss.ws.plugins.tools;
 import java.io.File;
 import java.util.List;
 
+import org.apache.maven.artifact.Artifact;
+
 /**
  * Runs wsprovide tool (for tests)
  * 
@@ -53,6 +55,15 @@ public class TestWsProvideMojo extends AbstractWsProvideMojo
     */
    protected List<String> testClasspathElements;
 
+   /**
+    * 
+    * 
+    * @parameter default-value="${plugin.artifacts}"
+    * @required
+    * @readonly
+    */
+   private List<Artifact> pluginArtifacts;
+   
    @Override
    public File getOutputDirectory()
    {
@@ -69,5 +80,11 @@ public class TestWsProvideMojo extends AbstractWsProvideMojo
    protected void updateProjectSourceRoots()
    {
       project.addTestCompileSourceRoot(sourceDirectory.getAbsolutePath());
+   }
+
+   @Override
+   public List<Artifact> getPluginArtifacts()
+   {
+      return pluginArtifacts;
    }
 }

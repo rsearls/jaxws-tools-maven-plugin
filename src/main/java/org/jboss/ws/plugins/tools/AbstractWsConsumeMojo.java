@@ -27,6 +27,7 @@ import java.net.URLClassLoader;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 
@@ -140,6 +141,10 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
          params.setWsdlLocation(wsdlLocation);
          params.setArgLine(argLine);
          params.setFork(fork);
+         if (fork)
+         {
+            params.setAdditionalPluginDependencies(getRequiredPluginDependencyPaths());
+         }
          WSContractDelegate delegate = new WSContractDelegate(getLog());
          
          for (String wsdl : wsdls)

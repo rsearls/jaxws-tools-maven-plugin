@@ -71,7 +71,13 @@
 	  <dependency>
 		<groupId>org.jboss.ws.cxf</groupId>
 		<artifactId>jbossws-cxf-client</artifactId>
-		<version>3.4.0.CR1</version>
+		<version>4.0.0.CR1</version>
+		<exclusions> <!-- TODO remove this exclusion when moving to 4.0.0.CR2 (as that prevents junit from leaking into the dependency tree -->
+		  <exclusion>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		  </exclusion>
+		</exclusions>
 	  </dependency>
 	</dependencies>
 </project>

@@ -59,7 +59,7 @@ public class WSContractDelegate
    private void runProviderInProcess(WSContractProviderParams params) throws Exception
    {
       ClassLoader loader = params.getLoader();
-      Class<?> providerClass = loader.loadClass("org.jboss.wsf.spi.tools.WSContractProvider");
+      Class<?> providerClass = loader.loadClass("org.jboss.ws.api.tools.WSContractProvider");
       Object provider = providerClass.getMethod("newInstance").invoke(null);
       setupProvider(providerClass, provider, params);
       Method m = providerClass.getMethod("provide", new Class<?>[]{String.class});
@@ -74,7 +74,8 @@ public class WSContractDelegate
       {
          classpath.add(url.getFile());
       }
-      List<String> commandList = initCommandList(params.getArgLine(), classpath, "org.jboss.wsf.spi.tools.cmd.WSProvide");
+      classpath.addAll(params.getAdditionalPluginDependencies());
+      List<String> commandList = initCommandList(params.getArgLine(), classpath, "org.jboss.ws.tools.cmd.WSProvide");
       String commandLine = getProviderCommandLine(commandList, params);
       
       if (log.isDebugEnabled())
@@ -107,7 +108,7 @@ public class WSContractDelegate
    private void runConsumerInProcess(WSContractConsumerParams params, String wsdl) throws Exception
    {
       ClassLoader loader = params.getLoader();
-      Class<?> consumerClass = loader.loadClass("org.jboss.wsf.spi.tools.WSContractConsumer");
+      Class<?> consumerClass = loader.loadClass("org.jboss.ws.api.tools.WSContractConsumer");
       Object consumer = consumerClass.getMethod("newInstance").invoke(null);
       setupConsumer(consumerClass, consumer, params);
       Method m = consumerClass.getMethod("consume", new Class<?>[]{String.class});
@@ -116,7 +117,14 @@ public class WSContractDelegate
    
    private void runConsumerOutOfProcess(WSContractConsumerParams params, String wsdl) throws Exception
    {
-      List<String> commandList = initCommandList(params.getArgLine(), params.getAdditionalCompilerClassPath(), "org.jboss.wsf.spi.tools.cmd.WSConsume");
+      List<String> classpath = new LinkedList<String>();
+      URL[] urls = params.getLoader().getURLs();
+      for (URL url : urls)
+      {
+         classpath.add(url.getFile());
+      }
+      classpath.addAll(params.getAdditionalPluginDependencies());
+      List<String> commandList = initCommandList(params.getArgLine(), classpath, "org.jboss.ws.tools.cmd.WSConsume");
       String commandLine = getConsumerCommandLine(commandList, params, wsdl);
       
       if (log.isDebugEnabled())

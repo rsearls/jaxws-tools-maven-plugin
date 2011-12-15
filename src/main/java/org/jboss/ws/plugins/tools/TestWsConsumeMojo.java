@@ -24,6 +24,8 @@ package org.jboss.ws.plugins.tools;
 import java.io.File;
 import java.util.List;
 
+import org.apache.maven.artifact.Artifact;
+
 /**
  * Run wsconsume tool (for tests)
  *
@@ -52,6 +54,15 @@ public class TestWsConsumeMojo extends AbstractWsConsumeMojo
     * @readonly
     */
    protected List<String> testClasspathElements;
+   
+   /**
+    * 
+    * 
+    * @parameter default-value="${plugin.artifacts}"
+    * @required
+    * @readonly
+    */
+   private List<Artifact> pluginArtifacts;
 
    @Override
    public File getOutputDirectory()
@@ -69,5 +80,11 @@ public class TestWsConsumeMojo extends AbstractWsConsumeMojo
    protected void updateProjectSourceRoots()
    {
       project.addTestCompileSourceRoot(sourceDirectory.getAbsolutePath());
+   }
+
+   @Override
+   public List<Artifact> getPluginArtifacts()
+   {
+      return pluginArtifacts;
    }
 }

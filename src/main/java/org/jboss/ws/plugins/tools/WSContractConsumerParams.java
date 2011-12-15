@@ -22,12 +22,13 @@
 package org.jboss.ws.plugins.tools;
 
 import java.io.File;
+import java.net.URLClassLoader;
 import java.util.List;
 
 public class WSContractConsumerParams
 {
    private boolean fork;
-   private ClassLoader loader;
+   private URLClassLoader loader;
    private List<String> additionalCompilerClassPath;
    private List<String> bindingFiles;
    private File catalog;
@@ -41,7 +42,16 @@ public class WSContractConsumerParams
    private String targetPackage;
    private String wsdlLocation;
    private String argLine;
+   private List<String> additionalPluginDependencies;
 
+   public List<String> getAdditionalPluginDependencies()
+   {
+      return additionalPluginDependencies;
+   }
+   public void setAdditionalPluginDependencies(List<String> additionalPluginDependencies)
+   {
+      this.additionalPluginDependencies = additionalPluginDependencies;
+   }
    public boolean isAdditionalHeaders()
    {
       return additionalHeaders;
@@ -66,11 +76,11 @@ public class WSContractConsumerParams
    {
       return fork;
    }
-   public void setLoader(ClassLoader loader)
+   public void setLoader(URLClassLoader loader)
    {
       this.loader = loader;
    }
-   public ClassLoader getLoader()
+   public URLClassLoader getLoader()
    {
       return loader;
    }

@@ -7,7 +7,7 @@
   <artifactId>maven-jaxws-tools-plugin</artifactId>
   <packaging>maven-plugin</packaging>
 
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
 
   <!-- Parent -->
   <parent>
@@ -25,7 +25,9 @@
 
   <!-- Properties -->
   <properties>
-    <jbossws.spi.version>1.4.0.CR1</jbossws.spi.version>
+    <jbossws.common.tools.version>1.0.0.CR1</jbossws.common.tools.version>
+    <getopt.version>1.0.13</getopt.version>
+    <log4j.version>1.2.14</log4j.version>
     <maven.project.version>2.0.11</maven.project.version>
     <maven.plugin.api.version>2.0.4</maven.plugin.api.version>
     <maven.invoker.plugin.version>1.5</maven.invoker.plugin.version>
@@ -38,8 +40,18 @@
   <dependencies>
     <dependency>
       <groupId>org.jboss.ws</groupId>
-      <artifactId>jbossws-spi</artifactId>
-      <version>${jbossws.spi.version}</version>
+      <artifactId>jbossws-common-tools</artifactId>
+      <version>${jbossws.common.tools.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>gnu-getopt</groupId>
+      <artifactId>getopt</artifactId>
+      <version>${getopt.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -114,19 +126,6 @@
               <cloneProjectsTo>${project.build.directory}/test-embedded-cxf</cloneProjectsTo>
               <pomIncludes>
                 <pomInclude>*/pom-cxf.xml</pomInclude>
-              </pomIncludes>
-            </configuration>
-          </execution>
-          <execution>
-            <id>integration-test-metro</id>
-            <goals>
-              <goal>install</goal>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <cloneProjectsTo>${project.build.directory}/test-embedded-metro</cloneProjectsTo>
-              <pomIncludes>
-                <pomInclude>*/pom-metro.xml</pomInclude>
               </pomIncludes>
             </configuration>
           </execution>

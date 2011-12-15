@@ -101,6 +101,10 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
          params.setSourceDirectory(sourceDirectory);
          params.setFork(fork);
          params.setArgLine(argLine);
+         if (fork)
+         {
+            params.setAdditionalPluginDependencies(getRequiredPluginDependencyPaths());
+         }
          
          WSContractDelegate delegate = new WSContractDelegate(getLog());
          delegate.runProvider(params);
