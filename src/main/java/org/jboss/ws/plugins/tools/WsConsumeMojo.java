@@ -56,7 +56,7 @@ public class WsConsumeMojo extends AbstractWsConsumeMojo
    protected List<String> classpathElements;
    
    /**
-    * 
+    * The plugin dependency artifacts
     * 
     * @parameter default-value="${plugin.artifacts}"
     * @required

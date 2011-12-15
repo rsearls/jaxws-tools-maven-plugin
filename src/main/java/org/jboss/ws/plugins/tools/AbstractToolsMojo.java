@@ -110,12 +110,13 @@ abstract class AbstractToolsMojo extends AbstractMojo
    }
    
    /**
-    * Return the plugin dependencies that are required to actually call the tools
+    * Return the plugin dependencies that are required to actually call the tools in fork mode
     * (jbossws-common-tools and his transitive dependencies getopt and log4j)
-         //at the *end* of the list, add the required plugin dependency 
-         //that do not come in from the stack dependency tree because:
-         //1) jbossws-common-tools is not a required dep for stack clients
-         //2) log4j and getopt need to be provided scope deps, hence are not transitive
+    * Those dependencies would usually be added at the end of the classpath as they do not come
+    * in from the stack dependency tree because:
+    * 1) jbossws-common-tools is not a required dep for stack clients
+    * 2) log4j and getopt need to be provided scope deps in jbossws-commons-tools, hence they
+    *    are not transitive
     *  
     * @return a list with the required plugin dependencies
     */

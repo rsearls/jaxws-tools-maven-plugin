@@ -27,7 +27,6 @@ import java.net.URLClassLoader;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 

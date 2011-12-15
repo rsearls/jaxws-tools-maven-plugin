@@ -56,7 +56,7 @@ public class TestWsProvideMojo extends AbstractWsProvideMojo
    protected List<String> testClasspathElements;
 
    /**
-    * 
+    * The plugin dependency artifacts
     * 
     * @parameter default-value="${plugin.artifacts}"
     * @required
