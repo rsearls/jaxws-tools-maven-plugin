@@ -28,8 +28,8 @@
     <jbossws.common.tools.version>1.0.0.CR1</jbossws.common.tools.version>
     <getopt.version>1.0.13</getopt.version>
     <log4j.version>1.2.14</log4j.version>
-    <maven.project.version>2.0.11</maven.project.version>
-    <maven.plugin.api.version>2.0.4</maven.plugin.api.version>
+    <maven.project.version>2.2.1</maven.project.version>
+    <maven.plugin.api.version>2.2.1</maven.plugin.api.version>
     <maven.invoker.plugin.version>1.5</maven.invoker.plugin.version>
     <!-- For test -->
     <junit.version>4.7</junit.version>
