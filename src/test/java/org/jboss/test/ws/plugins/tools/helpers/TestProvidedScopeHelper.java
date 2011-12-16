@@ -21,9 +21,7 @@
  */
 package org.jboss.test.ws.plugins.tools.helpers;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.Map;
 
 /**
@@ -39,8 +37,6 @@ public class TestProvidedScopeHelper implements VerifyScriptHelper, SetupScriptH
    private Long lastModificationTime2 = null;
    private Long wsdlLastModificationTime = null;
    private Long wsdlLastModificationTime2 = null;
-//   private static final String JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR = "public EndpointService(URL wsdlLocation, WebServiceFeature... features)";
-//   private static final String JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR_CONTENTS = "super(wsdlLocation, serviceName, features);";
 
    @Override
    public boolean verify(File basedir, File localRepositoryPath, Map<?, ?> context) throws Exception
@@ -58,11 +54,6 @@ public class TestProvidedScopeHelper implements VerifyScriptHelper, SetupScriptH
          System.out.println(endpointServiceFile + " was not modified by the plugin!");
          return false;
       }
-//      if (!readContents(endpointServiceFile).contains(JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR_CONTENTS))
-//      {
-//         System.out.println("Could not find JAXWS 2.2 constructor '" + JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR + "' in " + endpointServiceFile);
-//         return false;
-//      }
       
       //second execution checks
       File endpointServiceFile2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsconsume" + File.separator + "java" +
@@ -77,11 +68,6 @@ public class TestProvidedScopeHelper implements VerifyScriptHelper, SetupScriptH
          System.out.println(endpointServiceFile2 + " was not modified by the plugin!");
          return false;
       }
-//      if (!readContents(endpointServiceFile2).contains(JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR_CONTENTS))
-//      {
-//         System.out.println("Could not find JAXWS 2.2 constructor '" + JAXWS_22_ENDPOINT_SERVICE_CONSTRUCTOR + "' in " + endpointServiceFile2);
-//         return false;
-//      }
       
       //classes checks
       File classesFoo = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "classes" + File.separator + "foo");
@@ -163,18 +149,5 @@ public class TestProvidedScopeHelper implements VerifyScriptHelper, SetupScriptH
          this.wsdlLastModificationTime2 = wsdl2.lastModified();
       }
    }
-   
-//   private String readContents(File file) throws Exception
-//   {
-//      BufferedReader in = new BufferedReader(new FileReader(file));
-//      StringBuffer buffer = new StringBuffer();
-//      String line;
-//      while ((line = in.readLine()) != null)
-//      {
-//         buffer.append(line);
-//      }
-//      in.close();
-//      return buffer.toString();
-//   }
 
 }
