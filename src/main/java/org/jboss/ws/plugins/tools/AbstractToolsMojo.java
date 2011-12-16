@@ -122,6 +122,7 @@ abstract class AbstractToolsMojo extends AbstractMojo
     */
    protected List<String> getRequiredPluginDependencyPaths()
    {
+      //TODO!! retrieve the actual version to be used from the included stack dependency instead?
       List<String> result = new ArrayList<String>(3);
       for (Artifact s : getPluginArtifacts()) {
          if ("org.jboss.ws".equals(s.getGroupId()) && "jbossws-common-tools".equals(s.getArtifactId()))

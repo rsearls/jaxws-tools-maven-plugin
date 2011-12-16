@@ -31,7 +31,7 @@ import org.apache.maven.artifact.Artifact;
  *
  * @goal wsconsume-test
  * @phase generate-test-sources
- * @requiresDependencyResolution
+ * @requiresDependencyResolution test
  * @description JBossWS WSConsume (Test) Maven Plugin.
  *
  * @author alessio.soldano@jboss.com

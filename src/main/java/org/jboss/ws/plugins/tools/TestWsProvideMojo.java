@@ -31,7 +31,7 @@ import org.apache.maven.artifact.Artifact;
  * 
  * @goal wsprovide-test
  * @phase process-test-classes
- * @requiresDependencyResolution
+ * @requiresDependencyResolution test
  * @description JBossWS WSProvide (Test) Maven Plugin.
  * 
  * @author alessio.soldano@jboss.com

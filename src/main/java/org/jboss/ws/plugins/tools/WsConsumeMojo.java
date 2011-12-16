@@ -31,7 +31,7 @@ import org.apache.maven.artifact.Artifact;
  *
  * @goal wsconsume
  * @phase generate-sources
- * @requiresDependencyResolution
+ * @requiresDependencyResolution compile
  * @description JBossWS WSConsume Maven Plugin.
  *
  * @author alessio.soldano@jboss.com
