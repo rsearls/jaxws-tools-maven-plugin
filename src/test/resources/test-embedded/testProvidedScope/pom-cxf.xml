@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <name>testProviderScope</name>
+	<groupId>org.jboss.ws.plugins.maven.tests</groupId>
+	<artifactId>testProvidedScope</artifactId>
+	<packaging>jar</packaging>
+	<version>@pom.version@</version>
+
+	<build>
+	  <pluginManagement>
+		<plugins>
+		  <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>2.3.2</version>
+			<configuration>
+				<source>1.5</source>
+				<target>1.5</target>
+				<maxmem>256M</maxmem>
+				<fork>${compiler.fork}</fork>
+			</configuration>
+		  </plugin>
+		</plugins>
+	  </pluginManagement>
+	  <plugins>
+		<plugin>
+          <groupId>org.jboss.ws.plugins</groupId>
+          <artifactId>maven-jaxws-tools-plugin</artifactId>
+          <version>@pom.version@</version>
+          <configuration>
+            <target>2.1</target>
+            <verbose>true</verbose>
+          </configuration>
+          <executions>
+            <execution>
+              <id>First execution</id>
+              <goals>
+                <goal>wsconsume</goal>
+              </goals>
+              <configuration>
+                <wsdls>
+                  <wsdl>${basedir}/test.wsdl</wsdl>
+                </wsdls>
+                <targetPackage>foo.bar</targetPackage>
+              </configuration>
+            </execution>
+            <execution>
+              <id>Second execution</id>
+              <goals>
+                <goal>wsconsume-test</goal>
+              </goals>
+              <configuration>
+                <wsdls>
+                  <wsdl>${basedir}/test.wsdl</wsdl>
+                </wsdls>
+                <targetPackage>foo.test.bar</targetPackage>
+              </configuration>
+            </execution>
+            <execution>
+              <id>Third execution</id>
+              <goals>
+                <goal>wsprovide</goal>
+              </goals>
+              <configuration>
+                <endpointClass>org.jboss.test.ws.plugins.tools.wsprovide.TestEndpoint</endpointClass>
+                <generateWsdl>true</generateWsdl>
+              </configuration>
+            </execution>
+            <execution>
+              <id>Fourth execution</id>
+              <goals>
+                <goal>wsprovide-test</goal>
+              </goals>
+              <configuration>
+                <endpointClass>org.jboss.test.ws.plugins.tools.wsprovide.TestEndpoint2</endpointClass>
+                <generateWsdl>true</generateWsdl>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+	  </plugins>
+	</build>
+
+	<dependencies>
+	  <dependency>
+		<groupId>org.jboss.ws.cxf</groupId>
+		<artifactId>jbossws-cxf-client</artifactId>
+		<version>4.0.0.CR1</version>
+		<scope>provided</scope>
+		<exclusions> <!-- TODO remove this exclusion when moving to 4.0.0.CR2 (as that prevents junit from leaking into the dependency tree -->
+		  <exclusion>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		  </exclusion>
+		</exclusions>
+	  </dependency>
+	  <dependency>
+		<groupId>org.jboss.ws.cxf</groupId>
+		<artifactId>jbossws-cxf-factories</artifactId>
+		<version>4.0.0.CR1</version>
+		<scope>provided</scope>
+	  </dependency>
+	  <dependency>
+		<groupId>org.jboss.spec.javax.xml.ws</groupId>
+		<artifactId>jboss-jaxws-api_2.2_spec</artifactId>
+		<version>2.0.0.Final</version>
+		<scope>provided</scope>
+	  </dependency>
+	</dependencies>
+</project>

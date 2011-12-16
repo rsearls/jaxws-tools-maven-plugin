@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://testendorse.samples.jaxws.ws.test.jboss.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://testendorse.samples.jaxws.ws.test.jboss.org/" name="EndpointService">
+<types/>
+<message name="echoString">
+<part name="arg0" type="xsd:string"/>
+</message>
+<message name="echoStringResponse">
+<part name="return" type="xsd:string"/>
+</message>
+<portType name="Endpoint">
+<operation name="echoString">
+<input message="tns:echoString"/>
+<output message="tns:echoStringResponse"/>
+</operation>
+</portType>
+<binding name="EndpointPortBinding" type="tns:Endpoint">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+<operation name="echoString">
+<soap:operation soapAction="urn:EchoString"/>
+<input>
+<soap:body use="literal" namespace="http://testendorse.samples.jaxws.ws.test.jboss.org/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://testendorse.samples.jaxws.ws.test.jboss.org/"/>
+</output>
+</operation>
+</binding>
+<service name="EndpointService">
+<port name="EndpointPort" binding="tns:EndpointPortBinding">
+<soap:address location="http://127.0.0.1:8080/jaxws-samples-testendorse"/>
+</port>
+</service>
+</definitions>
