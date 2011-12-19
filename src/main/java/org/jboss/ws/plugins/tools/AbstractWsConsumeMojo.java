@@ -140,10 +140,6 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
          params.setWsdlLocation(wsdlLocation);
          params.setArgLine(argLine);
          params.setFork(fork);
-         if (fork)
-         {
-            params.setAdditionalPluginDependencies(getRequiredPluginDependencyPaths());
-         }
          WSContractDelegate delegate = new WSContractDelegate(getLog());
          
          for (String wsdl : wsdls)

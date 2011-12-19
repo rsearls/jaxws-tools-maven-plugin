@@ -74,7 +74,6 @@ public class WSContractDelegate
       {
          classpath.add(url.getFile());
       }
-      classpath.addAll(params.getAdditionalPluginDependencies());
       List<String> commandList = initCommandList(params.getArgLine(), classpath, "org.jboss.ws.tools.cmd.WSProvide");
       String commandLine = getProviderCommandLine(commandList, params);
       
@@ -123,7 +122,6 @@ public class WSContractDelegate
       {
          classpath.add(url.getFile());
       }
-      classpath.addAll(params.getAdditionalPluginDependencies());
       List<String> commandList = initCommandList(params.getArgLine(), classpath, "org.jboss.ws.tools.cmd.WSConsume");
       String commandLine = getConsumerCommandLine(commandList, params, wsdl);
       
