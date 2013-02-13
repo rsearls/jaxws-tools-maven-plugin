@@ -42,7 +42,7 @@ public class TestProvidedScopeHelper implements VerifyScriptHelper, SetupScriptH
    public boolean verify(File basedir, File localRepositoryPath, Map<?, ?> context) throws Exception
    {
       //fist execution checks
-      File endpointServiceFile = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsconsume" + File.separator + "java" +
+      File endpointServiceFile = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "generated-sources" + File.separator + "wsconsume" +
             File.separator + "foo" + File.separator + "bar" + File.separator + "EndpointService.java");
       if (!endpointServiceFile.exists())
       {
@@ -56,7 +56,7 @@ public class TestProvidedScopeHelper implements VerifyScriptHelper, SetupScriptH
       }
       
       //second execution checks
-      File endpointServiceFile2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsconsume" + File.separator + "java" +
+      File endpointServiceFile2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "generated-sources" + File.separator + "wsconsume" +
             File.separator + "foo" + File.separator + "test" + File.separator + "bar" + File.separator + "EndpointService.java");
       if (!endpointServiceFile2.exists())
       {
@@ -120,7 +120,7 @@ public class TestProvidedScopeHelper implements VerifyScriptHelper, SetupScriptH
    public void setup(File basedir, File localRepositoryPath, Map<?, ?> context) throws Exception
    {
       //first execution
-      File endpointServiceFile = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsconsume" + File.separator + "java" +
+      File endpointServiceFile = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "generated-sources" + File.separator + "wsconsume" +
             File.separator + "foo" + File.separator + "bar" + File.separator + "EndpointService.java");
       if (endpointServiceFile.exists())
       {
@@ -128,7 +128,7 @@ public class TestProvidedScopeHelper implements VerifyScriptHelper, SetupScriptH
       }
       
       //second execution
-      File endpointServiceFile2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsconsume" + File.separator + "java" +
+      File endpointServiceFile2 = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "generated-sources" + File.separator + "wsconsume" +
             File.separator + "foo" + File.separator + "test" + File.separator + "bar" + File.separator + "EndpointService.java");
       if (endpointServiceFile2.exists())
       {

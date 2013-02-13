@@ -40,7 +40,7 @@ public class TestWsConsumeHelper implements VerifyScriptHelper, SetupScriptHelpe
    public boolean verify(File basedir, File localRepositoryPath, Map<?, ?> context) throws Exception
    {
       //fist execution checks
-      File endpointFile = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsconsume" + File.separator + "java" +
+      File endpointFile = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "generated-sources" + File.separator + "wsconsume" +
             File.separator + "foo" + File.separator + "bar" + File.separator + "Endpoint.java");
       if (!endpointFile.exists())
       {
@@ -87,7 +87,7 @@ public class TestWsConsumeHelper implements VerifyScriptHelper, SetupScriptHelpe
    @Override
    public void setup(File basedir, File localRepositoryPath, Map<?, ?> context) throws Exception
    {
-      File endpointFile = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "wsconsume" + File.separator + "java" +
+      File endpointFile = new File(basedir.getAbsolutePath() + File.separator + "target" + File.separator + "generated-sources" + File.separator + "wsconsume" +
             File.separator + "foo" + File.separator + "bar" + File.separator + "Endpoint.java");
       if (endpointFile.exists())
       {
