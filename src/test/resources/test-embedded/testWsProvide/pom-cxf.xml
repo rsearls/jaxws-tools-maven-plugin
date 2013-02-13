@@ -62,6 +62,29 @@
                 <generateWsdl>true</generateWsdl>
               </configuration>
             </execution>
+            <execution>
+              <id>Third execution</id>
+                <goals>
+                  <goal>wsprovide</goal>
+                </goals>
+                  <configuration>
+                    <endpointClass>org.jboss.test.ws.plugins.tools.wsprovide.TestEndpoint3</endpointClass>
+                    <generateWsdl>true</generateWsdl>
+                    <fork>true</fork>
+                    <portSoapAddress>http://someHost:somePort</portSoapAddress>
+                  </configuration>
+            </execution>
+            <execution>
+              <id>Fourth execution</id>
+                <goals>
+                  <goal>wsprovide-test</goal>
+                </goals>
+                  <configuration>
+                    <endpointClass>org.jboss.test.ws.plugins.tools.wsprovide.TestEndpoint4</endpointClass>
+                    <generateWsdl>true</generateWsdl>
+                    <portSoapAddress>http://someHost:somePort</portSoapAddress>
+                  </configuration>
+            </execution>
           </executions>
         </plugin>
 	  </plugins>

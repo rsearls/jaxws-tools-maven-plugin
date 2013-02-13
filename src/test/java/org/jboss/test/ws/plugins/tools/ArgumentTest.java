@@ -91,6 +91,7 @@ public class ArgumentTest extends AbstractToolsMojoTestCase
       assertThat(mojo.getClasspathElements(), hasItems(new String[] { "cp1", "cp2" }));
       assertTrue(mojo.isFork());
       assertEquals("-Dfoo=bar", mojo.getArgLine());
+      assertEquals("http://someHost:somePort", mojo.getPortSoapAddress());
    }
 
 }

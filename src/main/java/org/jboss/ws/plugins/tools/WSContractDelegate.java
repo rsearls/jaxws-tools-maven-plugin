@@ -258,6 +258,10 @@ public class WSContractDelegate
       {
          commandList.add("-e");
       }
+      if(params.getPortSoapAddress() != null){
+         commandList.add("-a");
+         commandList.add(params.getPortSoapAddress());
+      }
       commandList.add(params.getEndpointClass());
       StringBuilder command = new StringBuilder();
       for (String s : commandList)
@@ -352,6 +356,10 @@ public class WSContractDelegate
       if (params.getSourceDirectory() != null)
       {
          callMethod(providerClass, provider, "setSourceDirectory", params.getSourceDirectory());
+      }
+      if (params.getPortSoapAddress() != null)
+      {
+          callMethod(providerClass, provider, "setPortSoapAddress", params.getPortSoapAddress());
       }
    }
 

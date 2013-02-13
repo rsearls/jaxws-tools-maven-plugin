@@ -66,7 +66,15 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
     * @required
     */
    private String endpointClass;
-   
+
+    /**
+     * Sets the soap:address to be used for the generated port in the wsdl.
+     * 
+     * @parameter
+     */
+   private String portSoapAddress;
+
+
    public void execute() throws MojoExecutionException
    {
       Log log = getLog();
@@ -101,6 +109,7 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
          params.setSourceDirectory(sourceDirectory);
          params.setFork(fork);
          params.setArgLine(argLine);
+         params.setPortSoapAddress(portSoapAddress);
          
          WSContractDelegate delegate = new WSContractDelegate(getLog());
          delegate.runProvider(params);
@@ -135,5 +144,10 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
    public String getEndpointClass()
    {
       return endpointClass;
+   }
+
+   public String getPortSoapAddress()
+   {
+      return portSoapAddress;
    }
 }

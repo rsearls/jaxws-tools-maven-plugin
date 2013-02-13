@@ -15,6 +15,7 @@
           <sourceDirectory>source</sourceDirectory>
           <endpointClass>endpoint</endpointClass>
           <extension>true</extension>
+          <portSoapAddress>http://someHost:somePort</portSoapAddress>
           <verbose>true</verbose>
           <fork>true</fork>
           <argLine>-Dfoo=bar</argLine>

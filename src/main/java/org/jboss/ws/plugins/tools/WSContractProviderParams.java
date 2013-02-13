@@ -37,6 +37,7 @@ public class WSContractProviderParams
    private File resourceDirectory;
    private File sourceDirectory;
    private String argLine;
+   private String portSoapAddress;
 
    public boolean isFork()
    {
@@ -117,5 +118,14 @@ public class WSContractProviderParams
    public void setSourceDirectory(File sourceDirectory)
    {
       this.sourceDirectory = sourceDirectory;
+   }
+
+   public String getPortSoapAddress()
+   {
+      return portSoapAddress;
+   }
+   public void setPortSoapAddress(String portSoapAddress)
+   {
+      this.portSoapAddress = portSoapAddress;
    }
 }
