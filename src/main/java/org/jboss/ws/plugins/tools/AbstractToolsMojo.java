@@ -133,6 +133,10 @@ abstract class AbstractToolsMojo extends AbstractMojo
          {
             result.add(s.getFile().getAbsolutePath());
          }
+         else if ("gnu.getopt".equals(s.getGroupId()) && "java-getopt".equals(s.getArtifactId()))
+         {
+            result.add(s.getFile().getAbsolutePath());
+         }
          else if ("log4j".equals(s.getGroupId()) && "log4j".equals(s.getArtifactId()))
          {
             result.add(s.getFile().getAbsolutePath());
