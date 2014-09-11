@@ -94,6 +94,13 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
    private String wsdlLocation;
 
    /**
+    * Sets the charset encoding to be used for generated files.
+    * 
+    * @parameter default-value="${project.build.sourceEncoding}"
+    */
+   protected String encoding;
+
+   /**
     * Set the target JAX-WS specification target. Defaults to <code>2.0</code>. Allowed values are <code>2.0</code>, <code>2.1</code>
     * 
     * @parameter
@@ -138,6 +145,7 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
          params.setTarget(target);
          params.setTargetPackage(targetPackage);
          params.setWsdlLocation(wsdlLocation);
+         params.setEncoding(encoding);
          params.setArgLine(argLine);
          params.setFork(fork);
          WSContractDelegate delegate = new WSContractDelegate(getLog());

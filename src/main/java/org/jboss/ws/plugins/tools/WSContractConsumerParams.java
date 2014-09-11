@@ -41,6 +41,7 @@ public class WSContractConsumerParams
    private String target;
    private String targetPackage;
    private String wsdlLocation;
+   private String encoding;
    private String argLine;
 
    public boolean isAdditionalHeaders()
@@ -130,6 +131,14 @@ public class WSContractConsumerParams
    public void setWsdlLocation(String wsdlLocation)
    {
       this.wsdlLocation = wsdlLocation;
+   }
+   public String getEncoding()
+   {
+	   return encoding;
+   }
+   public void setEncoding(String encoding)
+   {
+	   this.encoding = encoding;
    }
    public boolean isExtension()
    {

@@ -192,6 +192,11 @@ public class WSContractDelegate
          commandList.add("-w");
          commandList.add(params.getWsdlLocation());
       }
+      if (params.getEncoding() != null)
+      {
+    	  commandList.add("-d");
+    	  commandList.add(params.getEncoding());
+      }
       if (params.getOutputDirectory() != null)
       {
          commandList.add("-o");
@@ -314,6 +319,10 @@ public class WSContractDelegate
       if (params.getWsdlLocation() != null)
       {
          callMethod(consumerClass, consumer, "setWsdlLocation", params.getWsdlLocation());
+      }
+      if (params.getEncoding() != null)
+      {
+    	  callMethod(consumerClass, consumer, "setEncoding", params.getEncoding());
       }
    }
    
