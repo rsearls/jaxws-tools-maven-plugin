@@ -60,6 +60,7 @@ public class ArgumentTest extends AbstractToolsMojoTestCase
       assertEquals("catalog", mojo.getCatalog().getName());
       assertTrue(mojo.getExtension());
       assertEquals("wl", mojo.getWsdlLocation());
+      assertEquals("UTF-8", mojo.getEncoding());
       assertEquals("source", mojo.getSourceDirectory().getName());
       assertTrue(mojo.isVerbose());
       assertTrue(mojo.isAdditionalHeaders());

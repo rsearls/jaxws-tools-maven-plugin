@@ -22,6 +22,7 @@
           <sourceDirectory>source</sourceDirectory>
           <targetPackage>tp</targetPackage>
           <wsdlLocation>wl</wsdlLocation>
+          <encoding>UTF-8</encoding>
           <target>t</target>
           <extension>true</extension>
           <verbose>true</verbose>

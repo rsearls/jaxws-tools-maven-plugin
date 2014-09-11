@@ -203,6 +203,11 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
       return wsdlLocation;
    }
 
+   public String getEncoding()
+   {
+      return encoding;
+   }
+
    public String getTarget()
    {
       return target;
