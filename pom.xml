@@ -96,19 +96,6 @@
         </configuration>
         <executions>
           <execution>
-            <id>integration-test-native</id>
-            <goals>
-              <goal>install</goal>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <cloneProjectsTo>${project.build.directory}/test-embedded-native</cloneProjectsTo>
-              <pomIncludes>
-                <pomInclude>*/pom.xml</pomInclude>
-              </pomIncludes>
-            </configuration>
-          </execution>
-          <execution>
             <id>integration-test-cxf</id>
             <goals>
               <goal>install</goal>
