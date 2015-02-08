@@ -68,13 +68,7 @@ public class WSContractDelegate
    
    private void runProviderOutOfProcess(WSContractProviderParams params) throws Exception
    {
-      List<String> classpath = new LinkedList<String>();
-      URL[] urls = params.getLoader().getURLs();
-      for (URL url : urls)
-      {
-         classpath.add(url.getFile());
-      }
-      List<String> commandList = initCommandList(params.getArgLine(), classpath, "org.jboss.ws.tools.cmd.WSProvide");
+      List<String> commandList = initCommandList(params.getArgLine(), params.getManifestOnlyJar(), "org.jboss.ws.tools.cmd.WSProvide");
       String commandLine = getProviderCommandLine(commandList, params);
       
       if (log.isDebugEnabled())
@@ -116,13 +110,7 @@ public class WSContractDelegate
    
    private void runConsumerOutOfProcess(WSContractConsumerParams params, String wsdl) throws Exception
    {
-      List<String> classpath = new LinkedList<String>();
-      URL[] urls = params.getLoader().getURLs();
-      for (URL url : urls)
-      {
-         classpath.add(url.getFile());
-      }
-      List<String> commandList = initCommandList(params.getArgLine(), classpath, "org.jboss.ws.tools.cmd.WSConsume");
+      List<String> commandList = initCommandList(params.getArgLine(), params.getManifestOnlyJar(), "org.jboss.ws.tools.cmd.WSConsume");
       String commandLine = getConsumerCommandLine(commandList, params, wsdl);
       
       if (log.isDebugEnabled())
@@ -140,6 +128,14 @@ public class WSContractDelegate
       }
    }
    
+   /**
+    * Write list of archives on the command-line
+    *
+    * @param argLine
+    * @param classpath
+    * @param toolClass
+    * @return
+    */
    private static List<String> initCommandList(String argLine, List<String> classpath, String toolClass)
    {
       List<String> commandList = new ArrayList<String>();
@@ -161,6 +157,29 @@ public class WSContractDelegate
          additionalClasspath.deleteCharAt(additionalClasspath.length() - 1);
          commandList.add(additionalClasspath.toString());
       }
+      commandList.add(toolClass);
+      return commandList;
+   }
+   
+   /**
+    * Write manifest-only jar to the command-line
+    *
+    * @param argLine
+    * @param manifestOnlyJar
+    * @param toolClass
+    * @return
+    * @throws Exception
+    */
+   private static List<String> initCommandList(String argLine, File manifestOnlyJar, String toolClass) throws Exception
+   {
+      List<String> commandList = new ArrayList<String>();
+      commandList.add("java");
+      if (argLine != null)
+      {
+         commandList.add(argLine);
+      }
+      commandList.add("-classpath ");
+      commandList.add(manifestOnlyJar.getCanonicalPath());
       commandList.add(toolClass);
       return commandList;
    }

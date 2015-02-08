@@ -92,7 +92,7 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
             log.info(" " + s);
          }
       }
-      
+
       ClassLoader origLoader = Thread.currentThread().getContextClassLoader();
       URLClassLoader loader = getMavenClasspathAwareClassLoader();
       Thread.currentThread().setContextClassLoader(loader);
@@ -110,7 +110,10 @@ public abstract class AbstractWsProvideMojo extends AbstractToolsMojo
          params.setFork(fork);
          params.setArgLine(argLine);
          params.setPortSoapAddress(portSoapAddress);
-         
+
+         File manifestOnlyJar = createJar(getClasspathElements(), endpointClass);
+         params.setManifestOnlyJar(manifestOnlyJar);
+
          WSContractDelegate delegate = new WSContractDelegate(getLog());
          delegate.runProvider(params);
          

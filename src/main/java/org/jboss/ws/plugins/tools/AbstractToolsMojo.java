@@ -22,11 +22,16 @@
 package org.jboss.ws.plugins.tools;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarOutputStream;
+import java.util.jar.Manifest;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
@@ -72,7 +77,7 @@ abstract class AbstractToolsMojo extends AbstractMojo
     * @parameter default-value="false"
     */
    protected Boolean fork;
-   
+
    /**
     * Either ${build.outputDirectory} or ${build.testOutputDirectory}.
     */
@@ -164,5 +169,47 @@ abstract class AbstractToolsMojo extends AbstractMojo
    {
       return fork;
    }
-   
+
+   /**
+    * Create a jar with just a manifest containing a Main-Class entry and a Class-Path entry
+    * for all classpath elements.
+    *
+    * @param classPath      List&lt;String> of all classpath elements.
+    * @param startClassName  The classname to start (main-class)
+    * @return The file pointint to the jar
+    * @throws java.io.IOException When a file operation fails.
+    */
+   public File createJar( List<String> classPath, String startClassName )
+      throws IOException
+   {
+      File tempDirectory = getOutputDirectory();
+      tempDirectory.mkdirs();
+      File file = File.createTempFile( "jbosswsJaxwsTools", ".jar", tempDirectory );
+
+      FileOutputStream fos = new FileOutputStream( file );
+      JarOutputStream jos = new JarOutputStream( fos );
+      jos.setLevel( JarOutputStream.STORED );
+      JarEntry je = new JarEntry( "META-INF/MANIFEST.MF" );
+      jos.putNextEntry( je );
+
+      Manifest man = new Manifest();
+
+      // we can't use StringUtils.join here since we need to add a '/' to
+      // the end of directory entries - otherwise the jvm will ignore them.
+      String cp = "";
+      for ( String el : classPath )
+      {
+         // NOTE: if File points to a directory, this entry MUST end in '/'.
+         cp += UrlUtils.getURL(new File(el)).toExternalForm() + " ";
+      }
+
+      man.getMainAttributes().putValue( "Manifest-Version", "1.0" );
+      man.getMainAttributes().putValue( "Class-Path", cp.trim() );
+      man.getMainAttributes().putValue( "Main-Class", startClassName );
+
+      man.write( jos );
+      jos.close();
+
+      return file;
+   }
 }

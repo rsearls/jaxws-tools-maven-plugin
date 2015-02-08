@@ -148,6 +148,10 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
          params.setEncoding(encoding);
          params.setArgLine(argLine);
          params.setFork(fork);
+         
+         File manifestOnlyJar = createJar(getClasspathElements(), "");
+         params.setManifestOnlyJar(manifestOnlyJar);
+
          WSContractDelegate delegate = new WSContractDelegate(getLog());
          
          for (String wsdl : wsdls)
@@ -166,6 +170,10 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
             }
          }
          updateProjectSourceRoots();
+      }
+      catch (java.io.IOException ioe)
+      {
+         throw new MojoExecutionException("Error while running wsconsume", ioe);
       }
       finally
       {

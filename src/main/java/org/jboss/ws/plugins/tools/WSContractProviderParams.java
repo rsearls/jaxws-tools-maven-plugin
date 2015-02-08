@@ -38,6 +38,7 @@ public class WSContractProviderParams
    private File sourceDirectory;
    private String argLine;
    private String portSoapAddress;
+   private File manifestOnlyJar;
 
    public boolean isFork()
    {
@@ -128,4 +129,15 @@ public class WSContractProviderParams
    {
       this.portSoapAddress = portSoapAddress;
    }
+
+   public File getManifestOnlyJar()
+   {
+      return manifestOnlyJar;
+   }
+
+   public void setManifestOnlyJar(File manifestOnlyJar)
+   {
+      this.manifestOnlyJar = manifestOnlyJar;
+   }
 }
+

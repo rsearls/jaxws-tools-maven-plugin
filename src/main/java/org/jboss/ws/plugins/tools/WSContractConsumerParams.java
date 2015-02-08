@@ -43,7 +43,8 @@ public class WSContractConsumerParams
    private String wsdlLocation;
    private String encoding;
    private String argLine;
-
+   private File manifestOnlyJar;
+   
    public boolean isAdditionalHeaders()
    {
       return additionalHeaders;
@@ -171,5 +172,15 @@ public class WSContractConsumerParams
    public void setSourceDirectory(File sourceDirectory)
    {
       this.sourceDirectory = sourceDirectory;
+   }
+   
+   public File getManifestOnlyJar()
+   {
+      return manifestOnlyJar;
+   }
+
+   public void setManifestOnlyJar(File manifestOnlyJar)
+   {
+      this.manifestOnlyJar = manifestOnlyJar;
    }
 }
