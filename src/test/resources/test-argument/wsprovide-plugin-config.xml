@@ -3,7 +3,7 @@
     <plugins>
       <plugin>
         <groupId>org.jboss.ws.plugins</groupId>
-        <artifactId>maven-jaxws-tools-plugin</artifactId>
+        <artifactId>jaxws-tools-maven-plugin</artifactId>
         <configuration>
           <outputDirectory>output</outputDirectory>
           <classpathElements>

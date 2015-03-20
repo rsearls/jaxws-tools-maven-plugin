@@ -31,7 +31,7 @@
 	  <plugins>
 		<plugin>
           <groupId>org.jboss.ws.plugins</groupId>
-          <artifactId>maven-jaxws-tools-plugin</artifactId>
+          <artifactId>jaxws-tools-maven-plugin</artifactId>
           <version>@pom.version@</version>
           <configuration>
             <target>2.2</target> <!-- This is actually ignored by the CXF tooling, the jaxws 2.2 version is being used because of the endorsing here -->
