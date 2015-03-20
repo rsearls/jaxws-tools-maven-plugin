@@ -196,7 +196,7 @@ abstract class AbstractToolsMojo extends AbstractMojo
       StringBuilder cp = new StringBuilder();
       for ( String el : classPath )
       {
-         cp.append(UrlUtils.getURL(new File(el)).toExternalForm());
+         cp.append(new File(el).toURI().toURL().toExternalForm());
          cp.append(" ");
       }
 
