@@ -24,7 +24,6 @@ package org.jboss.ws.plugins.tools;
 import java.io.File;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -126,39 +125,6 @@ public class WSContractDelegate
       {
          throw new Exception("Process terminated with code " + result);
       }
-   }
-   
-   /**
-    * Write list of archives on the command-line
-    *
-    * @param argLine
-    * @param classpath
-    * @param toolClass
-    * @return
-    */
-   private static List<String> initCommandList(String argLine, List<String> classpath, String toolClass)
-   {
-      List<String> commandList = new ArrayList<String>();
-      commandList.add("java");
-      if (argLine != null)
-      {
-         commandList.add(argLine);
-      }
-      List<String> cp = classpath;
-      if (cp != null && !cp.isEmpty())
-      {
-         commandList.add("-classpath ");
-         StringBuilder additionalClasspath = new StringBuilder();
-         for (String c : cp)
-         {
-            additionalClasspath.append(c);
-            additionalClasspath.append(File.pathSeparator);
-         }
-         additionalClasspath.deleteCharAt(additionalClasspath.length() - 1);
-         commandList.add(additionalClasspath.toString());
-      }
-      commandList.add(toolClass);
-      return commandList;
    }
    
    /**

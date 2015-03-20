@@ -179,35 +179,32 @@ abstract class AbstractToolsMojo extends AbstractMojo
     * @return The file pointint to the jar
     * @throws java.io.IOException When a file operation fails.
     */
-   public File createJar( List<String> classPath, String startClassName )
-      throws IOException
+   public File createJar(List<String> classPath, String startClassName) throws IOException
    {
-      File tempDirectory = getOutputDirectory();
+      File tempDirectory = new File(getOutputDirectory().getParentFile(), "jaxws-tools");
       tempDirectory.mkdirs();
-      File file = File.createTempFile( "jbosswsJaxwsTools", ".jar", tempDirectory );
+      File file = File.createTempFile("jaxws-tools-maven-plugin-classpath-", ".jar", tempDirectory);
 
-      FileOutputStream fos = new FileOutputStream( file );
-      JarOutputStream jos = new JarOutputStream( fos );
-      jos.setLevel( JarOutputStream.STORED );
-      JarEntry je = new JarEntry( "META-INF/MANIFEST.MF" );
-      jos.putNextEntry( je );
+      FileOutputStream fos = new FileOutputStream(file);
+      JarOutputStream jos = new JarOutputStream(fos);
+      jos.setLevel(JarOutputStream.STORED);
+      JarEntry je = new JarEntry("META-INF/MANIFEST.MF");
+      jos.putNextEntry(je);
 
       Manifest man = new Manifest();
 
-      // we can't use StringUtils.join here since we need to add a '/' to
-      // the end of directory entries - otherwise the jvm will ignore them.
-      String cp = "";
+      StringBuilder cp = new StringBuilder();
       for ( String el : classPath )
       {
-         // NOTE: if File points to a directory, this entry MUST end in '/'.
-         cp += UrlUtils.getURL(new File(el)).toExternalForm() + " ";
+         cp.append(UrlUtils.getURL(new File(el)).toExternalForm());
+         cp.append(" ");
       }
 
-      man.getMainAttributes().putValue( "Manifest-Version", "1.0" );
-      man.getMainAttributes().putValue( "Class-Path", cp.trim() );
-      man.getMainAttributes().putValue( "Main-Class", startClassName );
+      man.getMainAttributes().putValue("Manifest-Version", "1.0");
+      man.getMainAttributes().putValue("Class-Path", cp.toString().trim());
+      man.getMainAttributes().putValue("Main-Class", startClassName);
 
-      man.write( jos );
+      man.write(jos);
       jos.close();
 
       return file;
