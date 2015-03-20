@@ -49,7 +49,7 @@ public class WsProvideMojo extends AbstractWsProvideMojo
    /**
     * Project classpath.
     *
-    * @parameter expression="${project.compileClasspathElements}"
+    * @parameter property="project.compileClasspathElements"
     * @required
     * @readonly
     */

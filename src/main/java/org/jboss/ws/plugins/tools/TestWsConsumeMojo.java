@@ -49,7 +49,7 @@ public class TestWsConsumeMojo extends AbstractWsConsumeMojo
    /**
     * Project test classpath.
     *
-    * @parameter expression="${project.testClasspathElements}"
+    * @parameter property="project.testClasspathElements"
     * @required
     * @readonly
     */

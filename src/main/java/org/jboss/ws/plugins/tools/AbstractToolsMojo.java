@@ -47,7 +47,7 @@ import org.apache.maven.project.MavenProject;
 abstract class AbstractToolsMojo extends AbstractMojo
 {
    /**
-   * @parameter expression="${project}"
+   * @parameter property="project"
    * @readonly
    */
    protected MavenProject project;

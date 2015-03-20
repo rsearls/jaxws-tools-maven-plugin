@@ -49,7 +49,7 @@ public class WsConsumeMojo extends AbstractWsConsumeMojo
    /**
     * Project classpath.
     *
-    * @parameter expression="${project.compileClasspathElements}"
+    * @parameter property="project.compileClasspathElements"
     * @required
     * @readonly
     */
