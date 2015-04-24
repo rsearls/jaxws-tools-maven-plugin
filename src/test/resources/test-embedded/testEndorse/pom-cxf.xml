@@ -120,12 +120,12 @@
 	  <dependency>
 		<groupId>org.jboss.ws.cxf</groupId>
 		<artifactId>jbossws-cxf-client</artifactId>
-		<version>5.0.0.Beta2</version>
+		<version>5.0.0.Final</version>
 	  </dependency>
 	  <dependency>
 		<groupId>org.jboss.ws.cxf</groupId>
 		<artifactId>jbossws-cxf-factories</artifactId>
-		<version>5.0.0.Beta2</version>
+		<version>5.0.0.Final</version>
 	  </dependency>
 	  <dependency>
 		<groupId>org.jboss.spec.javax.xml.ws</groupId>
