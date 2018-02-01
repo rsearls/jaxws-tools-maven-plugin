@@ -25,7 +25,7 @@
 
   <!-- Properties -->
   <properties>
-    <jbossws.common.tools.version>1.2.1.Final</jbossws.common.tools.version>
+    <jbossws.common.tools.version>1.2.4.Final</jbossws.common.tools.version>
     <getopt.version>1.0.13</getopt.version>
     <log4j.version>1.2.14</log4j.version>
     <maven.project.version>2.2.1</maven.project.version>
