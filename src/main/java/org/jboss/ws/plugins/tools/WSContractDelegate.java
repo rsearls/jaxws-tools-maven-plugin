@@ -37,7 +37,7 @@ public class WSContractDelegate
 {
    private static final PrintStream PS = System.out;
    private Log log;
-   
+
    public WSContractDelegate(Log log)
    {
       this.log = log;
@@ -143,6 +143,9 @@ public class WSContractDelegate
       if (argLine != null)
       {
          commandList.add(argLine);
+      }
+      if (Util.getJVMMajorVersion() > 8) {
+         commandList.add("--add-modules=java.compiler ");
       }
       commandList.add("-classpath ");
       commandList.add(manifestOnlyJar.getCanonicalPath());
