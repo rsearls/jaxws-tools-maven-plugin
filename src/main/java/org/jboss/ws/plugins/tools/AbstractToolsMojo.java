@@ -125,26 +125,26 @@ abstract class AbstractToolsMojo extends AbstractMojo
     *  
     * @return a list with the required plugin dependencies
     */
-   protected List<String> getRequiredPluginDependencyPaths()
+   protected List<File> getRequiredPluginDependencyPaths()
    {
       //TODO!! retrieve the actual version to be used from the included stack dependency instead?
-      List<String> result = new ArrayList<String>(3);
+      List<File> result = new ArrayList<File>(3);
       for (Artifact s : getPluginArtifacts()) {
          if ("org.jboss.ws".equals(s.getGroupId()) && "jbossws-common-tools".equals(s.getArtifactId()))
          {
-            result.add(s.getFile().getAbsolutePath());
+            result.add(s.getFile());
          }
          else if ("gnu-getopt".equals(s.getGroupId()) && "getopt".equals(s.getArtifactId()))
          {
-            result.add(s.getFile().getAbsolutePath());
+            result.add(s.getFile());
          }
          else if ("gnu.getopt".equals(s.getGroupId()) && "java-getopt".equals(s.getArtifactId()))
          {
-            result.add(s.getFile().getAbsolutePath());
+            result.add(s.getFile());
          }
          else if ("log4j".equals(s.getGroupId()) && "log4j".equals(s.getArtifactId()))
          {
-            result.add(s.getFile().getAbsolutePath());
+            result.add(s.getFile());
          }
       }
       return result;
@@ -197,6 +197,12 @@ abstract class AbstractToolsMojo extends AbstractMojo
       for ( String el : classPath )
       {
          cp.append(new File(el).toURI().toURL().toExternalForm());
+         cp.append(" ");
+      }
+
+      List<File> pluginDeps = getRequiredPluginDependencyPaths();
+      for (File f : pluginDeps) {
+         cp.append(f.getAbsolutePath());
          cp.append(" ");
       }
 

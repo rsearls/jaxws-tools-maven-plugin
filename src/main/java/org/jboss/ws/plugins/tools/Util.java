@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2010, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2018, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -19,25 +19,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.test.ws.plugins.tools.wsprovide;
+package org.jboss.ws.plugins.tools;
 
-import javax.jws.WebService;
-import javax.xml.ws.soap.Addressing;
-import javax.xml.ws.soap.AddressingFeature.Responses;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-/**
- * A simple test endpoint service implementation
- * 
- * @author alessio.soldano@jboss.com
- * @since 22-Sep-2010
- *
- */
-@WebService
-@Addressing(responses = Responses.ALL) //this requires JAXWS 2.2
-public class TestEndpoint
-{
-   public String test(String s)
-   {
-      return s;
+public class Util {
+
+   public static int getJVMMajorVersion() {
+      try {
+         String vmVersionStr = System.getProperty("java.specification.version", null);
+         Matcher matcher = Pattern.compile("^(?:1\\.)?(\\d+)$").matcher(vmVersionStr); //match 1.<number> or <number>
+         if (matcher.find()) {
+            return Integer.valueOf(matcher.group(1));
+         } else {
+            throw new RuntimeException("Unknown version of jvm " + vmVersionStr);
+         }
+      } catch (Exception e) {
+         return 8;
+      }
    }
 }

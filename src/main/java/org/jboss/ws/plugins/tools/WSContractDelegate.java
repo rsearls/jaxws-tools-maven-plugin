@@ -36,6 +36,7 @@ import org.jboss.ws.plugins.tools.MavenLogStreamConsumer.Type;
 public class WSContractDelegate
 {
    private static final PrintStream PS = System.out;
+   private static final String FS = System.getProperty("file.separator");
    private Log log;
    
    public WSContractDelegate(Log log)
@@ -139,10 +140,15 @@ public class WSContractDelegate
    private static List<String> initCommandList(String argLine, File manifestOnlyJar, String toolClass) throws Exception
    {
       List<String> commandList = new ArrayList<String>();
-      commandList.add("java");
+
+      File javaFile = new File (System.getProperty("java.home") + FS + "bin" + FS + "java");
+      commandList.add(javaFile.exists() ? javaFile.getCanonicalPath() : "java");
       if (argLine != null)
       {
          commandList.add(argLine);
+      }
+      if (Util.getJVMMajorVersion() > 8) {
+         commandList.add("--add-modules=java.compiler ");
       }
       commandList.add("-classpath ");
       commandList.add(manifestOnlyJar.getCanonicalPath());

@@ -147,10 +147,20 @@ public abstract class AbstractWsConsumeMojo extends AbstractToolsMojo
          params.setWsdlLocation(wsdlLocation);
          params.setEncoding(encoding);
          params.setArgLine(argLine);
-         params.setFork(fork);
-         
-         File manifestOnlyJar = createJar(getClasspathElements(), "");
-         params.setManifestOnlyJar(manifestOnlyJar);
+
+         if (fork || Util.getJVMMajorVersion() > 8) {
+            params.setFork(true);
+            File manifestOnlyJar = createJar(getClasspathElements(), "");
+            params.setManifestOnlyJar(manifestOnlyJar);
+            if (verbose)
+            {
+               log.info("Additional plugin classpath:");
+               for (File f : getRequiredPluginDependencyPaths())
+               {
+                  log.info(" " + f.getAbsolutePath());
+               }
+            }
+         }
 
          WSContractDelegate delegate = new WSContractDelegate(getLog());
          
